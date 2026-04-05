@@ -4,562 +4,874 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Zehnder Governance — Template-Bibliothek</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --forest:#0b1f12;--pine:#132d1a;--moss:#245430;--sage:#357a45;
-  --gold:#c08c28;--gold-l:#d4a94a;--cream:#f8f5ee;--white:#fff;
-  --ink:#07100a;--muted:#6e8278;--border:rgba(192,140,40,.15);
-  --radius:12px;
-}
+:root{--ink:#07100a;--forest:#0b1f12;--pine:#132d1a;--moss:#245430;--gold:#c08c28;--gold-l:#d4a94a;--r:10px;--border:rgba(192,140,40,.13);}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--cream);color:var(--ink);font-family:'Outfit',sans-serif;line-height:1.6;}
+body{background:var(--ink);color:#fff;font-family:'Outfit',sans-serif;line-height:1.6;}
 a{text-decoration:none;color:inherit;}
-
-/* NAV */
-nav{position:sticky;top:0;z-index:100;background:rgba(7,16,10,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;}
-.nl{display:flex;align-items:center;gap:10px;}
-.logo-z{width:32px;height:32px;border-radius:8px;background:linear-gradient(145deg,var(--moss),var(--forest));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--gold);}
-.logo-text{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:#fff;letter-spacing:.05em;}
-.logo-text em{color:var(--gold);font-style:normal;}
-.nav-right{display:flex;align-items:center;gap:10px;}
-.nav-btn{padding:7px 16px;border-radius:7px;font-size:12.5px;font-weight:600;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;}
-.nav-btn-out{border:1px solid rgba(255,255,255,.18);color:#fff;background:transparent;}
-.nav-btn-out:hover{background:rgba(255,255,255,.07);}
-.nav-btn-gold{background:var(--gold);color:var(--ink);}
-.nav-btn-gold:hover{background:var(--gold-l);}
-
-/* HERO */
-#hero{background:var(--forest);padding:72px 24px 56px;text-align:center;position:relative;overflow:hidden;}
-#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(36,84,48,.4),transparent);}
-.hero-inner{position:relative;max-width:760px;margin:0 auto;}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(192,140,40,.12);border:1px solid rgba(192,140,40,.25);border-radius:20px;padding:5px 14px;font-size:12px;color:var(--gold);margin-bottom:20px;letter-spacing:.06em;}
-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,58px);font-weight:600;color:#fff;line-height:1.1;margin-bottom:14px;}
-h1 em{color:var(--gold);font-style:normal;}
-.hero-sub{font-size:16px;color:rgba(255,255,255,.55);max-width:560px;margin:0 auto 32px;}
-.hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;}
-.hstat{text-align:center;}
-.hstat .n{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--gold);}
-.hstat .l{font-size:12px;color:rgba(255,255,255,.45);margin-top:2px;}
-
-/* ACCESS INFO */
-#access{background:rgba(11,31,18,.98);border-bottom:1px solid var(--border);padding:18px 24px;}
-.access-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-.access-text{font-size:13.5px;color:rgba(255,255,255,.6);}
-.access-text strong{color:var(--gold);}
-.access-btn{margin-left:auto;padding:8px 20px;border-radius:7px;background:var(--gold);color:var(--ink);font-size:13px;font-weight:600;white-space:nowrap;}
-.access-btn:hover{background:var(--gold-l);}
-
-/* FILTER BAR */
-#filterbar{background:#fff;border-bottom:1px solid rgba(0,0,0,.08);padding:14px 24px;position:sticky;top:60px;z-index:90;}
-.filter-inner{max-width:1100px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-.filter-label{font-size:12px;color:var(--muted);font-weight:500;margin-right:4px;}
-.ftag{padding:6px 14px;border-radius:20px;font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid rgba(0,0,0,.1);background:#fff;color:var(--ink);transition:all .18s;}
-.ftag:hover,.ftag.active{background:var(--forest);color:#fff;border-color:var(--forest);}
-.ftag.active{background:var(--gold);color:var(--ink);border-color:var(--gold);}
-.search-box{margin-left:auto;padding:7px 14px;border:1px solid rgba(0,0,0,.12);border-radius:8px;font-size:13px;font-family:'Outfit',sans-serif;width:220px;outline:none;}
-.search-box:focus{border-color:var(--gold);}
-
-/* MAIN */
-main{max-width:1100px;margin:0 auto;padding:40px 24px 80px;}
-
-/* CATEGORY SECTION */
-.cat-section{margin-bottom:56px;}
-.cat-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--border);}
-.cat-icon{width:44px;height:44px;border-radius:10px;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-.cat-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--forest);}
-.cat-count{margin-left:auto;font-size:12px;color:var(--muted);background:rgba(0,0,0,.06);padding:3px 10px;border-radius:10px;}
-.cat-desc{font-size:13px;color:var(--muted);margin-top:2px;}
-.cat-drive-btn{margin-left:auto;padding:7px 16px;border-radius:7px;background:var(--forest);color:#fff;font-size:12.5px;font-weight:500;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:all .2s;flex-shrink:0;}
-.cat-drive-btn:hover{background:var(--moss);}
-
-/* DOC GRID */
-.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
-
-/* DOC CARD */
-.doc-card{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:var(--radius);padding:18px 20px;display:flex;flex-direction:column;gap:10px;transition:all .2s;position:relative;}
-.doc-card:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(192,140,40,.1);transform:translateY(-2px);}
-.doc-card-top{display:flex;align-items:flex-start;gap:10px;}
-.doc-icon{width:36px;height:36px;border-radius:8px;background:rgba(11,31,18,.06);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.doc-name{font-size:14px;font-weight:600;color:var(--ink);line-height:1.3;}
-.doc-desc{font-size:12.5px;color:var(--muted);line-height:1.5;}
-.doc-footer{display:flex;align-items:center;gap:8px;margin-top:4px;}
-.lang-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:10px;background:rgba(11,31,18,.07);color:var(--forest);}
-.doc-btn{margin-left:auto;padding:6px 14px;border-radius:7px;background:var(--forest);color:#fff;font-size:12px;font-weight:500;display:flex;align-items:center;gap:5px;transition:all .18s;}
-.doc-btn:hover{background:var(--moss);}
-
-/* EMPTY STATE */
-.empty{text-align:center;padding:60px 24px;color:var(--muted);}
-.empty-icon{font-size:40px;margin-bottom:12px;}
-
-/* FOOTER */
-footer{background:var(--forest);color:rgba(255,255,255,.5);text-align:center;padding:32px 24px;font-size:13px;}
-footer a{color:var(--gold);}
-
-@media(max-width:640px){
-  .doc-grid{grid-template-columns:1fr;}
-  .hero-stats{gap:24px;}
-  .search-box{width:100%;}
-  .cat-drive-btn span{display:none;}
-}
+nav{position:fixed;inset:0 0 auto;z-index:200;background:rgba(7,16,10,.97);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;gap:14px;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:#fff;letter-spacing:.05em;}.logo em{color:var(--gold);font-style:normal;}
+.nbadge{background:rgba(192,140,40,.15);border:1px solid rgba(192,140,40,.3);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--gold-l);letter-spacing:.06em;}
+.nav-r{margin-left:auto;display:flex;gap:8px;align-items:center;}
+.btn-sm{padding:6px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;border:none;transition:all .2s;}
+.btn-out{background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);}
+.btn-out:hover{border-color:rgba(255,255,255,.35);color:#fff;}
+.btn-gold{background:var(--gold);color:var(--ink);}
+.layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 60px);margin-top:60px;}
+.sidebar{background:rgba(255,255,255,.02);border-right:1px solid rgba(255,255,255,.05);position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;padding:14px 0;}
+.sb-sec{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:10px 16px 4px;}
+.sb-btn{width:100%;text-align:left;background:transparent;border:none;padding:7px 16px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;color:rgba(255,255,255,.45);transition:all .15s;display:flex;align-items:center;gap:7px;}
+.sb-btn:hover{background:rgba(255,255,255,.04);color:rgba(255,255,255,.8);}
+.sb-btn.active{background:rgba(192,140,40,.1);color:var(--gold-l);border-left:2px solid var(--gold);}
+.sb-cnt{margin-left:auto;font-size:10px;background:rgba(255,255,255,.07);border-radius:3px;padding:1px 5px;color:rgba(255,255,255,.3);}
+.main{padding:26px 28px;max-width:920px;}
+.search-bar{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 15px;display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+.search-bar input{background:transparent;border:none;color:#fff;font-family:'Outfit',sans-serif;font-size:13px;flex:1;outline:none;}
+.search-bar input::placeholder{color:rgba(255,255,255,.3);}
+.sec-view{display:none;}.sec-view.active{display:block;}
+.sec-sl{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+.sec-h{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:#fff;margin-bottom:6px;}
+.divider{width:28px;height:2px;background:var(--gold);border-radius:2px;margin:8px 0 16px;}
+.sec-lead{font-size:13px;color:rgba(255,255,255,.42);line-height:1.7;max-width:620px;margin-bottom:20px;}
+.alert{border-radius:8px;padding:12px 15px;margin-bottom:16px;font-size:12.5px;line-height:1.65;}
+.a-gold{background:rgba(192,140,40,.08);border-left:3px solid var(--gold);color:rgba(255,255,255,.58);}
+.a-gold strong{color:var(--gold-l);}
+.a-red{background:rgba(192,40,40,.08);border-left:3px solid rgba(192,40,40,.5);color:rgba(255,200,200,.7);}
+.a-red strong{color:#ef9a9a;}
+.a-green{background:rgba(36,84,48,.15);border-left:3px solid var(--moss);color:rgba(255,255,255,.58);}
+.a-green strong{color:#a5d6a7;}
+.doc-group{margin-bottom:24px;}
+.dg-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.dg-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.05);}
+.dc{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:14px 16px;margin-bottom:7px;transition:all .18s;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;}
+.dc:hover{border-color:rgba(192,140,40,.22);background:rgba(192,140,40,.03);}
+.dc.ess{border-left:3px solid var(--gold);}
+.dc.opt{border-left:3px solid rgba(255,255,255,.08);}
+.dn{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;line-height:1.3;}
+.dw{font-size:12px;color:rgba(255,255,255,.45);line-height:1.55;margin-bottom:7px;}
+.dtags{display:flex;gap:4px;flex-wrap:wrap;}
+.tag{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:.03em;}
+.t-eu{background:rgba(21,101,192,.15);color:#90caf9;}
+.t-ch{background:rgba(198,40,40,.12);color:#ef9a9a;}
+.t-uk{background:rgba(0,51,141,.12);color:#82b1ff;}
+.t-us{background:rgba(26,35,126,.12);color:#9fa8da;}
+.t-cn{background:rgba(204,0,0,.1);color:#ff8a80;}
+.t-in{background:rgba(255,111,0,.1);color:#ffcc80;}
+.t-br{background:rgba(0,121,107,.1);color:#80cbc4;}
+.t-must{background:rgba(192,140,40,.15);color:var(--gold-l);}
+.t-opt{background:rgba(255,255,255,.05);color:rgba(255,255,255,.35);}
+.t-de{background:rgba(255,255,255,.06);color:rgba(255,255,255,.45);}
+.t-en{background:rgba(255,255,255,.04);color:rgba(255,255,255,.35);}
+.dl-wrap{display:flex;flex-direction:column;gap:5px;flex-shrink:0;}
+.dl-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;border:none;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .18s;white-space:nowrap;text-decoration:none;}
+.dl-de{background:rgba(192,140,40,.12);color:var(--gold-l);border:1px solid rgba(192,140,40,.2);}
+.dl-de:hover{background:rgba(192,140,40,.22);}
+.dl-en{background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1);}
+.dl-en:hover{background:rgba(255,255,255,.1);}
+.dl-g{background:var(--gold);color:var(--ink);}
+.dl-g:hover{background:var(--gold-l);}
+table{width:100%;border-collapse:collapse;margin-top:16px;}
+th{text-align:left;padding:8px 12px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.38);border-bottom:1px solid rgba(255,255,255,.06);}
+td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);font-size:12.5px;vertical-align:top;color:rgba(255,255,255,.6);}
+tr:hover td{background:rgba(255,255,255,.02);}
+.c-ok{color:#81c784;font-weight:600;font-size:12px;}
+.c-no{color:rgba(255,255,255,.2);font-size:12px;}
+.c-req{color:var(--gold-l);font-weight:600;font-size:12px;}
+.sr-results{display:none;}.sr-results.active{display:block;}
+.sr-count{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px;}
+@media(max-width:780px){.layout{grid-template-columns:1fr;}.sidebar{position:static;height:auto;}}
 </style>
 </head>
 <body>
-
 <nav>
-  <div class="nl">
-    <div class="logo-z">Z</div>
-    <div class="logo-text">ZEHNDER <em>GOVERNANCE</em></div>
-  </div>
-  <div class="nav-right">
-    <a href="https://zehndergovernance.com" class="nav-btn nav-btn-out">← Website</a>
-    <a href="https://zg-academy.vercel.app" class="nav-btn nav-btn-gold">Academy →</a>
+  <a href="https://zehndergovernance.com"><span class="logo">ZEHNDER <em>GOVERNANCE</em></span></a>
+  <span class="nbadge">TEMPLATE-BIBLIOTHEK</span>
+  <div class="nav-r">
+    <button class="btn-sm btn-out" onclick="location.href='https://zehndergovernance.com'">← Website</button>
+    <a href="https://zg-schulungen.vercel.app" target="_blank" class="btn-sm btn-gold">🎓 Schulung</a>
   </div>
 </nav>
 
-<section id="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">📂 COMPLIANCE PORTAL · TEMPLATE-BIBLIOTHEK</div>
-    <h1>Ihre <em>Vorlagen.</em><br>Sofort einsetzbar.</h1>
-    <p class="hero-sub">130+ professionelle Compliance-Vorlagen in Deutsch und Englisch — für alle Jurisdiktionen Ihres Unternehmens.</p>
-    <div class="hero-stats">
-      <div class="hstat"><div class="n">130+</div><div class="l">Vorlagen</div></div>
-      <div class="hstat"><div class="n">7</div><div class="l">Kategorien</div></div>
-      <div class="hstat"><div class="n">13</div><div class="l">Jurisdiktionen</div></div>
-      <div class="hstat"><div class="n">DE/EN</div><div class="l">Zweisprachig</div></div>
-    </div>
-  </div>
-</section>
-
-<div id="access">
-  <div class="access-inner">
-    <div class="access-text">💡 <strong>Tipp:</strong> Klicken Sie auf "Öffnen" bei jedem Dokument um es in Google Drive zu öffnen. Von dort können Sie es herunterladen oder direkt bearbeiten.</div>
-    <a href="https://drive.google.com/drive/folders/18Meb3tzw60pHLQjDEaTjm0OrrwrPnpO0?usp=sharing" target="_blank" class="access-btn">📂 Gesamte Bibliothek öffnen</a>
-  </div>
+<div class="layout">
+<div class="sidebar">
+  <div class="sb-sec">Anwendungsfall</div>
+  <button class="sb-btn active" onclick="show('start')">🧭 Wo starten?</button>
+  <button class="sb-btn" onclick="show('avv')">📋 Dienstleister (AVV)<span class="sb-cnt">6</span></button>
+  <button class="sb-btn" onclick="show('transfers')">🌍 Drittland-Transfers<span class="sb-cnt">10</span></button>
+  <button class="sb-btn" onclick="show('mitarbeiter')">👥 HR & Mitarbeitende<span class="sb-cnt">8</span></button>
+  <button class="sb-btn" onclick="show('website')">🌐 Website & Marketing<span class="sb-cnt">6</span></button>
+  <button class="sb-btn" onclick="show('governance')">⚖️ Governance & Audit<span class="sb-cnt">10</span></button>
+  <div class="sb-sec" style="margin-top:6px;">Nach Land</div>
+  <button class="sb-btn" onclick="show('ch')">🇨🇭 Schweiz (nDSG)<span class="sb-cnt">5</span></button>
+  <button class="sb-btn" onclick="show('uk')">🇬🇧 UK (UK GDPR)<span class="sb-cnt">4</span></button>
+  <button class="sb-btn" onclick="show('us')">🇺🇸 USA (CCPA)<span class="sb-cnt">4</span></button>
+  <div class="sb-sec" style="margin-top:6px;">Übersicht</div>
+  <button class="sb-btn" onclick="show('matrix')">📊 Länder-Matrix</button>
+  <button class="sb-btn" onclick="show('alle')">📁 Alle Dokumente</button>
 </div>
 
-<div id="filterbar">
-  <div class="filter-inner">
-    <span class="filter-label">Filter:</span>
-    <button class="ftag active" onclick="filterCat('all')">Alle</button>
-    <button class="ftag" onclick="filterCat('datenschutz')">🇨🇭🇪🇺🇬🇧 Datenschutz</button>
-    <button class="ftag" onclick="filterCat('vertraege')">📄 Verträge</button>
-    <button class="ftag" onclick="filterCat('ki')">🤖 KI / AI Act</button>
-    <button class="ftag" onclick="filterCat('usa')">🇺🇸 USA</button>
-    <button class="ftag" onclick="filterCat('asien')">🌏 Asien</button>
-    <button class="ftag" onclick="filterCat('website')">🌐 Website</button>
-    <button class="ftag" onclick="filterCat('schulung')">🎓 Schulungen</button>
-    <input class="search-box" type="text" placeholder="🔍 Dokument suchen..." oninput="searchDocs(this.value)">
+<div class="main">
+<div class="search-bar">
+  <span style="color:rgba(255,255,255,.3);font-size:16px;">🔍</span>
+  <input type="text" id="srch" placeholder="Suchen... AVV, TIA, Privacy Notice, Audit..." oninput="doSearch(this.value)">
+</div>
+<div class="sr-results" id="srDiv"></div>
+
+<!-- START -->
+<div class="sec-view active" id="sec-start">
+  <div class="sec-sl">Einstieg</div>
+  <div class="sec-h">Finden Sie das richtige Dokument</div>
+  <div class="divider"></div>
+  <p class="sec-lead">Wählen Sie Ihre Situation — die Bibliothek führt Sie direkt zu den richtigen Vorlagen mit Erklärung wann welches Dokument gebraucht wird.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
+    <button onclick="show('avv')" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:18px;text-align:left;cursor:pointer;font-family:'Outfit',sans-serif;color:#fff;transition:all .2s;" onmouseover="this.style.borderColor='rgba(192,140,40,.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
+      <div style="font-size:22px;margin-bottom:6px;">📋</div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Dienstleister beauftragen</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.4);">AVV, DPA, Vendor-Prüfung</div>
+    </button>
+    <button onclick="show('transfers')" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:18px;text-align:left;cursor:pointer;font-family:'Outfit',sans-serif;color:#fff;transition:all .2s;" onmouseover="this.style.borderColor='rgba(192,140,40,.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
+      <div style="font-size:22px;margin-bottom:6px;">🌍</div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Daten ins Ausland transferieren</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.4);">TIA, SCCs, IDTA, Entscheidungsbaum</div>
+    </button>
+    <button onclick="show('mitarbeiter')" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:18px;text-align:left;cursor:pointer;font-family:'Outfit',sans-serif;color:#fff;transition:all .2s;" onmouseover="this.style.borderColor='rgba(192,140,40,.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
+      <div style="font-size:22px;margin-bottom:6px;">👥</div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Mitarbeitende & HR</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.4);">Datenschutzhinweise, Onboarding, Richtlinien</div>
+    </button>
+    <button onclick="show('governance')" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:18px;text-align:left;cursor:pointer;font-family:'Outfit',sans-serif;color:#fff;transition:all .2s;" onmouseover="this.style.borderColor='rgba(192,140,40,.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
+      <div style="font-size:22px;margin-bottom:6px;">⚖️</div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Governance & Dokumentation</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.4);">VVT, Audit, DPIA, LIA, DPO</div>
+    </button>
   </div>
+  <div class="alert a-gold"><strong>Die 5 Pflichtdokumente für jedes Unternehmen:</strong> Verarbeitungsverzeichnis (VVT) · Incident Response Plan · Mitarbeiter-Datenschutzhinweise · AVV für jeden Dienstleister · Lösch- und Aufbewahrungskonzept</div>
 </div>
 
-<main id="main-content">
+<!-- AVV / DIENSTLEISTER -->
+<div class="sec-view" id="sec-avv">
+  <div class="sec-sl">Dienstleister beauftragen</div>
+  <div class="sec-h">AVV & Vertragsvorlagen</div>
+  <div class="divider"></div>
+  <p class="sec-lead">Jeder externe Dienstleister der Personendaten verarbeitet braucht einen Auftragsverarbeitungsvertrag (AVV). Ohne AVV ist die Verarbeitung rechtswidrig — gilt für Cloud-Provider, IT, HR-Software, CRM, E-Mail-Marketing etc.</p>
+  <div class="alert a-gold"><strong>Faustregel:</strong> Hat der Anbieter Zugriff auf Kundendaten, Mitarbeiterdaten oder andere Personendaten Ihres Unternehmens? → AVV Pflicht.</div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- KATEGORIE 01 -->
-<div class="cat-section" data-cat="datenschutz">
-  <div class="cat-header">
-    <div class="cat-icon">🇨🇭</div>
-    <div>
-      <div class="cat-title">Datenschutz CH / EU / UK</div>
-      <div class="cat-desc">Verarbeitungsverzeichnisse · Datenschutzhinweise · Incident Response · interne Policies · nDSG · UK GDPR</div>
-    </div>
-    <a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="cat-drive-btn">📂 <span>Ordner öffnen</span></a>
-  </div>
-  <div class="doc-grid">
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">📋</div><div class="doc-name">RoPA — Verzeichnis der Verarbeitungstätigkeiten</div></div>
-      <div class="doc-desc">Dokumentiert alle Datenbearbeitungen Ihres Unternehmens. Pflicht nach DSGVO Art. 30 und nDSG Art. 12. Inkl. Ausfüllhilfe mit Beispielen.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">🔍</div><div class="doc-name">DPIA / DSFA — Datenschutz-Folgenabschätzung</div></div>
-      <div class="doc-desc">Für Bearbeitungen mit hohem Risiko. Bewertet Risiken systematisch nach DSGVO Art. 35. Inkl. Schwellenwert-Checkliste.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">🚨</div><div class="doc-name">Incident Response Plan — Datenpanne</div></div>
-      <div class="doc-desc">Schritt-für-Schritt Anleitung bei Datenpannen. Meldefristen (72h DSGVO), Behördenmeldung, interne Eskalation.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">🔒</div><div class="doc-name">TOMs — Technische & Organisatorische Massnahmen</div></div>
-      <div class="doc-desc">Dokumentiert alle Sicherheitsmassnahmen. Pflichtnachweis gegenüber Auftraggebern und Behörden.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">✋</div><div class="doc-name">Betroffenenrechte — Prozess & Musterantworten</div></div>
-      <div class="doc-desc">Reagieren Sie korrekt auf Auskunfts-, Lösch- und Berichtigungsanfragen. Fertige Antwortvorlagen inklusive.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">📅</div><div class="doc-name">Löschkonzept & Aufbewahrungsfristen</div></div>
-      <div class="doc-desc">Regelt wie lange welche Daten aufbewahrt werden dürfen. Pflicht nach DSGVO und nDSG.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">📜</div><div class="doc-name">Datenschutzhinweise Mitarbeitende (DSGVO)</div></div>
-      <div class="doc-desc">Transparenzpflicht gegenüber Mitarbeitenden nach Art. 13/14 DSGVO. Auch in nDSG-Version verfügbar.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">🏠</div><div class="doc-name">Remote Work / Homeoffice Policy</div></div>
-      <div class="doc-desc">Sicherer Umgang mit Daten im Homeoffice. Inkl. BYOD-Regelungen, Clean Desk und Clear Screen Policy.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">✅</div><div class="doc-name">Jahres-Audit Checkliste DSGVO / nDSG</div></div>
-      <div class="doc-desc">Vollständige Checkliste für den jährlichen Datenschutz-Review. Mit Massnahmenplan und Statustracking.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">🇨🇭</div><div class="doc-name">nDSG Bearbeitungsverzeichnis</div></div>
-      <div class="doc-desc">Schweizer Format nach nDSG Art. 12. Angepasst an die spezifischen Anforderungen des Schweizer Datenschutzgesetzes.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">🇬🇧</div><div class="doc-name">UK Privacy Notice & Employee Notice</div></div>
-      <div class="doc-desc">Datenschutzerklärungen nach britischem UK GDPR (Post-Brexit). Inkl. ICO Registration Checklist und SAR Response Templates.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="datenschutz">
-      <div class="doc-card-top"><div class="doc-icon">⚖️</div><div class="doc-name">Legitimes Interesse — LIA Template</div></div>
-      <div class="doc-desc">Für Bearbeitungen auf Basis berechtigter Interessen (Art. 6 Abs. 1 lit. f DSGVO). Dokumentiert die Interessenabwägung.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1KZAsFfCGJrGt1sQX3uqdwhR4fMIhRKwV" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+  <div class="doc-group">
+    <div class="dg-title">Schritt 1 — Dienstleister vorab prüfen</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">Vendor Due Diligence — Datenschutz-Fragebogen</div>
+        <div class="dw">Vor Vertragsabschluss an neue Dienstleister senden. Prüft Zertifizierungen, Sicherheitsmassnahmen, Sub-Processors und Drittlandtransfers. Ergebnis entscheidet welche AVV-Version nötig ist.</div>
+        <div class="dtags"><span class="tag t-must">VOR VERTRAG</span><span class="tag t-eu">Art. 28 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1FiTa9szy9r52NxmG3osgTt5L7aBsNMd-/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1H3achaGmEE_aDyVK7fhutiKF1qiDVevs/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- KATEGORIE 02 -->
-<div class="cat-section" data-cat="vertraege">
-  <div class="cat-header">
-    <div class="cat-icon">📄</div>
-    <div>
-      <div class="cat-title">Verträge & Internationale Transfers</div>
-      <div class="cat-desc">AVV · DPA · EU SCCs · UK IDTA · TIA-Vorlagen für 13 Jurisdiktionen</div>
+  <div class="doc-group">
+    <div class="dg-title">Schritt 2 — AVV abschliessen</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">AVV Standard — Vollständiger Auftragsverarbeitungsvertrag</div>
+        <div class="dw">Für alle Dienstleister mit grösserem Datenvolumen, sensiblen Daten oder erhöhtem Risiko (Cloud, IT, HR-Software, CRM). Enthält alle Pflichtbestandteile nach Art. 28 DSGVO inkl. TOM-Anlage und Sub-Processor-Liste.</div>
+        <div class="dtags"><span class="tag t-must">PFLICHT</span><span class="tag t-eu">Art. 28 DSGVO</span><span class="tag t-ch">Art. 9 nDSG</span><span class="tag t-uk">UK GDPR</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_AVV_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="LINK_AVV_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <a href="https://drive.google.com/drive/u/3/folders/1TRQQolgnvqQtP6CTehFPZ4WqQS08TfTJ" target="_blank" class="cat-drive-btn">📂 <span>Ordner öffnen</span></a>
+    <div class="dc opt">
+      <div>
+        <div class="dn">AVV Kurzversion — Für kleinere Dienstleister</div>
+        <div class="dw">Für einfachere Beziehungen mit geringem Risiko (kleiner Webdesigner, einfaches Hosting ohne sensible Daten). Enthält alle Pflichtbestandteile, aber kompakter. Nicht für Gesundheitsdaten oder Drittland-Transfers.</div>
+        <div class="dtags"><span class="tag t-opt">VEREINFACHT</span><span class="tag t-eu">Art. 28 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_AVV_KURZ_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="LINK_AVV_KURZ_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Joint Controller Agreement — Gemeinsame Verantwortlichkeit</div>
+        <div class="dw">Wenn zwei Unternehmen gemeinsam über Zweck und Mittel einer Verarbeitung entscheiden (z.B. gemeinsames CRM, gemeinsame Marketingkampagne). Dann brauchen Sie KEINEN AVV sondern eine Art. 26-Vereinbarung.</div>
+        <div class="dtags"><span class="tag t-opt">SPEZIALFALL</span><span class="tag t-eu">Art. 26 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_JCA_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="LINK_JCA_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
   </div>
-  <div class="doc-grid">
-    <div class="doc-card" data-cat="vertraege">
-      <div class="doc-card-top"><div class="doc-icon">🤝</div><div class="doc-name">AVV — Auftragsverarbeitungsvertrag (Vollversion)</div></div>
-      <div class="doc-desc">Vollständiger Vertrag nach Art. 28 DSGVO. Pflicht für alle Dienstleister die Personendaten in Ihrem Auftrag bearbeiten. Inkl. Kurzversion.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1TRQQolgnvqQtP6CTehFPZ4WqQS08TfTJ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+
+  <div class="doc-group">
+    <div class="dg-title">Ergänzung — Datenschutzklauseln in Lieferantenverträgen</div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Datenschutzklauseln für Lieferantenverträge</div>
+        <div class="dw">Wenn Sie keinen separaten AVV, sondern Datenschutzpflichten direkt in den Hauptvertrag einbauen möchten. Fertige Klauseln zum Copy-Paste in bestehende Verträge.</div>
+        <div class="dtags"><span class="tag t-opt">ALTERNATIV ZU AVV</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_KLAUSELN_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="LINK_KLAUSELN_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="vertraege">
-      <div class="doc-card-top"><div class="doc-icon">🔗</div><div class="doc-name">Joint Controller Agreement (Art. 26 DSGVO)</div></div>
-      <div class="doc-desc">Für Fälle wo zwei Unternehmen gemeinsam für Datenbearbeitungen verantwortlich sind. Mit Zuständigkeitsmatrix.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1TRQQolgnvqQtP6CTehFPZ4WqQS08TfTJ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="vertraege">
-      <div class="doc-card-top"><div class="doc-icon">🇪🇺</div><div class="doc-name">EU SCCs Modul 1 & 2 — mit Kommentar</div></div>
-      <div class="doc-desc">EU Standardvertragsklauseln für grenzüberschreitende Transfers. Modul 1 (C2C) und Modul 2 (C2P) mit praxisnahem Kommentar.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1TRQQolgnvqQtP6CTehFPZ4WqQS08TfTJ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="vertraege">
-      <div class="doc-card-top"><div class="doc-icon">🇬🇧</div><div class="doc-name">UK IDTA — International Data Transfer Agreement</div></div>
-      <div class="doc-desc">Britisches Äquivalent zu den EU SCCs. Pflicht für Datentransfers in Drittländer aus dem UK nach Brexit.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1TRQQolgnvqQtP6CTehFPZ4WqQS08TfTJ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="vertraege">
-      <div class="doc-card-top"><div class="doc-icon">🌍</div><div class="doc-name">TIA — Transfer Impact Assessment Vorlage</div></div>
-      <div class="doc-desc">Rahmenvorlage für die Bewertung von Drittlandtransfers nach EDPB 8-Kriterien. Inkl. Entscheidungsbaum für den richtigen Mechanismus.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1TRQQolgnvqQtP6CTehFPZ4WqQS08TfTJ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="vertraege">
-      <div class="doc-card-top"><div class="doc-icon">🇺🇸🇨🇳</div><div class="doc-name">TIA USA / China — FISA & PIPL</div></div>
-      <div class="doc-desc">Fertige TIA-Bewertungen für die schwierigsten Jurisdiktionen. USA (FISA 702, EO 14086) und China (PIPL, CAC-Anforderungen).</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1TRQQolgnvqQtP6CTehFPZ4WqQS08TfTJ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="vertraege">
-      <div class="doc-card-top"><div class="doc-icon">🌐</div><div class="doc-name">TIA Indien, Brasilien, Vietnam & Serbien</div></div>
-      <div class="doc-desc">Fertige TIA-Bewertungen für weitere wichtige Jurisdiktionen ohne EU-Angemessenheitsbeschluss.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1TRQQolgnvqQtP6CTehFPZ4WqQS08TfTJ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="vertraege">
-      <div class="doc-card-top"><div class="doc-icon">🔄</div><div class="doc-name">Subprocessor Genehmigungsprozess</div></div>
-      <div class="doc-desc">Verfahren zur Genehmigung von Unterauftragsverarbeitern. Inkl. Checkliste, Benachrichtigungsvorlage und Register.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1TRQQolgnvqQtP6CTehFPZ4WqQS08TfTJ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Sub-Processor Genehmigungsprozess</div>
+        <div class="dw">Regelt wie Ihr Dienstleister weitere Unterauftragnehmer hinzuziehen darf. Wichtig wenn Sie selbst Auftragsverarbeiter für andere sind — und wenn Sie kontrollieren möchten wer Zugriff auf Ihre Daten hat.</div>
+        <div class="dtags"><span class="tag t-opt">BEI BEDARF</span><span class="tag t-eu">Art. 28(2)</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_SUBP_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="LINK_SUBP_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- KATEGORIE 03 -->
-<div class="cat-section" data-cat="ki">
-  <div class="cat-header">
-    <div class="cat-icon">🤖</div>
-    <div>
-      <div class="cat-title">KI-Governance / EU AI Act</div>
-      <div class="cat-desc">Policies · Konformitätsbewertungen · Enterprise Toolkit · Schulungen</div>
+<!-- TRANSFERS -->
+<div class="sec-view" id="sec-transfers">
+  <div class="sec-sl">Drittland-Transfers</div>
+  <div class="sec-h">Transfer Impact Assessments & Mechanismen</div>
+  <div class="divider"></div>
+  <p class="sec-lead">Seit Schrems II (2020) sind Transfers in Länder ohne EU-Angemessenheitsbeschluss nur legal wenn Sie ein Transfer Impact Assessment (TIA) durchgeführt und dokumentiert haben. EU SCCs allein reichen nicht.</p>
+  <div class="alert a-gold"><strong>Welches Dokument für welches Land?</strong> USA/China: Länder-spezifische TIAs (vorausgefüllt). Indien, Brasilien, Vietnam, Singapur, Australien: allgemeines TIA + Länderrisiko aus Country Intelligence Portal eintragen. UK/Japan/Südkorea/Serbien: kein TIA nötig (Angemessenheitsbeschluss).</div>
+
+  <div class="doc-group">
+    <div class="dg-title">Transfer Impact Assessments (TIA)</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">TIA Allgemein — Universelle Vorlage</div>
+        <div class="dw">Für alle Länder ohne eigenes TIA-Dokument: Indien, Brasilien, Vietnam, Singapur, Australien, Hongkong und weitere. Enthält 6-Schritte-Bewertung, 15-Kriterien-Datenrisiko, Ampelbewertung (Grün/Gelb/Rot). Länder-Risikoscore aus Country Intelligence Portal eintragen.</div>
+        <div class="dtags"><span class="tag t-must">PFLICHT</span><span class="tag t-eu">Post Schrems II</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1oMQWVq8_gpw0a0CMrPoC9PgSvmMCb68y/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1GF9cKH8GokZ6Vw9JD3MSAjKxQeyKNFB5/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <a href="https://drive.google.com/drive/u/3/folders/1cWvExQUcKFCsvQI65Wl-2rdKAXagBdcj" target="_blank" class="cat-drive-btn">📂 <span>Ordner öffnen</span></a>
+    <div class="dc ess">
+      <div>
+        <div class="dn">TIA USA — FISA 702, CLOUD Act, DPF</div>
+        <div class="dw">Vorausgefüllt für US-Transfers. Enthält FISA-Analyse, CLOUD Act-Risiko, DPF-Check-Schritt. Zuerst prüfen ob Empfänger DPF-zertifiziert ist (dataprivacyframework.gov) — falls ja: kein TIA nötig, Zertifizierung dokumentieren.</div>
+        <div class="dtags"><span class="tag t-must">USA</span><span class="tag t-us">FISA · DPF · Cloud Act</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1CZ62q6F8txi3KRiRb8ob4G4Ah2xRrGd-/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/10CWKfj0Tq-AWTV7HT2fHuMo1Do4q-HTY/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">TIA China — PIPL, CSL, Nationalsicherheitsgesetz</div>
+        <div class="dw">Vorausgefüllt für China-Transfers. Kritisches Risiko (Score 0.78/1.0). Enthält PIPL-Analyse, revidiertes Cybersecurity-Gesetz (in Kraft 1.1.2026), staatliche Zugriffsrechte. E2E-Verschlüsselung als Pflichtmassnahme.</div>
+        <div class="dtags"><span class="tag t-must">CHINA · KRITISCH</span><span class="tag t-cn">PIPL · CSL</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/108LyXcHkLbSwSXvVbTpyFm3xnZc8oDuK/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1F-cblj1kUzm9bUUNtG2VDdBGALk5jUAz/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">TIA Indien / Brasilien / Vietnam</div>
+        <div class="dw">Kombiniertes Dokument für diese drei Länder. Indien: DPDPA 2023 (Rules Q2 2026). Brasilien: LGPD mit aktiver ANPD-Enforcement (Risiko steigt). Vietnam: PDPD mit Datenlokalisierungspflichten (erhöhtes Risiko).</div>
+        <div class="dtags"><span class="tag t-in">Indien</span><span class="tag t-br">Brasilien</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_TIA_IBV_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
   </div>
-  <div class="doc-grid">
-    <div class="doc-card" data-cat="ki">
-      <div class="doc-card-top"><div class="doc-icon">📋</div><div class="doc-name">KI-Richtlinie für Mitarbeitende</div></div>
-      <div class="doc-desc">Interne Policy zum verantwortungsvollen Einsatz von KI-Tools. Verbotene Anwendungen, Datenschutz bei KI, Governance-Regeln.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1cWvExQUcKFCsvQI65Wl-2rdKAXagBdcj" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+
+  <div class="doc-group">
+    <div class="dg-title">Transfer-Mechanismen (Vertragsgrundlage)</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">EU SCCs Modul 1 — Controller to Controller (C2C)</div>
+        <div class="dw">Wenn EU-Controller Daten an Nicht-EU-Controller überträgt. Beispiel: EU-Muttergesellschaft teilt Mitarbeiterdaten mit US-Tochter die sie eigenständig verarbeitet. Beide sind selbstständige Controller.</div>
+        <div class="dtags"><span class="tag t-must">C→C</span><span class="tag t-eu">Decision 2021/914</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_SCC1_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="LINK_SCC1_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="ki">
-      <div class="doc-card-top"><div class="doc-icon">⚖️</div><div class="doc-name">EU AI Act Konformitätsbewertung</div></div>
-      <div class="doc-desc">Bewertet ob Ihre KI-Systeme unter den EU AI Act fallen und welche Anforderungen (Hochrisiko, begrenzt, minimal) gelten.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1cWvExQUcKFCsvQI65Wl-2rdKAXagBdcj" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">EU SCCs Modul 2 — Controller to Processor (C2P)</div>
+        <div class="dw">Der häufigste Fall: EU-Unternehmen beauftragt US-Cloud-Anbieter (AWS, Google Cloud, Microsoft Azure, Salesforce). Der Processor handelt auf Weisung des Controllers. Braucht zusätzlich TIA.</div>
+        <div class="dtags"><span class="tag t-must">HÄUFIGSTER FALL</span><span class="tag t-eu">Decision 2021/914</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1g85x_TPFyPhdoZ6n6dCQFHQntTb_nUBg/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/12_XGhT-YkpfiORUbp0g5xj1qeRAXHKBu/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="ki">
-      <div class="doc-card-top"><div class="doc-icon">🧰</div><div class="doc-name">EU AI Act Enterprise Toolkit (8-teilig)</div></div>
-      <div class="doc-desc">Komplettes Paket: Risikoklassifizierung, technische Dokumentation, menschliche Aufsicht, Transparenzpflichten und mehr.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1cWvExQUcKFCsvQI65Wl-2rdKAXagBdcj" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">🇬🇧 UK IDTA — International Data Transfer Agreement</div>
+        <div class="dw">Für Transfers AUS dem UK in Drittländer (USA, China etc.). Ersetzt EU SCCs für UK-seitige Transfers nach Brexit. Wenn Sie von EU UND UK aus transferieren: brauchen Sie beide — EU SCCs für EU-Transfers, UK IDTA für UK-Transfers.</div>
+        <div class="dtags"><span class="tag t-uk">UK GDPR</span><span class="tag t-uk">UK→Drittland</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_IDTA_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="ki">
-      <div class="doc-card-top"><div class="doc-icon">🇨🇳</div><div class="doc-name">CAC Security Assessment Guide (China KI)</div></div>
-      <div class="doc-desc">Chinesische Anforderungen für KI-Systeme: CAC-Bewertungsverfahren und Compliance-Anforderungen für den chinesischen Markt.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1cWvExQUcKFCsvQI65Wl-2rdKAXagBdcj" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">🇨🇭 CH Standarddatenschutzklauseln EDÖB</div>
+        <div class="dw">Für Transfers AUS der Schweiz in Drittländer. Neben EU SCCs: wenn Ihr Unternehmen in der CH sitzt brauchen Sie die CH-Klauseln zusätzlich zu den EU SCCs — nicht stattdessen.</div>
+        <div class="dtags"><span class="tag t-ch">Art. 16 nDSG</span><span class="tag t-ch">CH→Drittland</span><span class="tag t-de">DE</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1m_MlLxOtZaV302Olr8Px-Ak9yc_lyI6x/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+      </div>
+    </div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Transfer-Mechanismen Entscheidungsbaum</div>
+        <div class="dw">Übersicht welcher Mechanismus für welche Situation gilt: SCCs Modul 1 oder 2? IDTA? CH-Klauseln? Ideal als Orientierungshilfe für Ihr Team.</div>
+        <div class="dtags"><span class="tag t-opt">ORIENTIERUNG</span><span class="tag t-de">DE</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_ENTSCHEIDUNGSBAUM_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- KATEGORIE 04 -->
-<div class="cat-section" data-cat="usa">
-  <div class="cat-header">
-    <div class="cat-icon">🇺🇸</div>
-    <div>
-      <div class="cat-title">USA / CCPA / CPRA</div>
-      <div class="cat-desc">California Privacy · Do Not Sell · Multi-State Vergleich · Marketing Compliance</div>
+<!-- MITARBEITER -->
+<div class="sec-view" id="sec-mitarbeiter">
+  <div class="sec-sl">HR & Mitarbeitende</div>
+  <div class="sec-h">Datenschutz im Arbeitsverhältnis</div>
+  <div class="divider"></div>
+  <p class="sec-lead">Mitarbeiterdaten sind besonders sensibel. Lohn, Beurteilungen, Krankheitsdaten, Bewerbungsunterlagen — alles unterliegt strengem Datenschutz. Diese Dokumente decken das Arbeitsverhältnis von Recruiting bis Offboarding ab.</p>
+
+  <div class="doc-group">
+    <div class="dg-title">Informationspflichten — bei Stellenantritt und Recruiting</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">Datenschutzhinweise Mitarbeitende (DSGVO)</div>
+        <div class="dw">Bei Stellenantritt auszuhändigen. Informiert über alle Datenverarbeitungen im Arbeitsverhältnis: Lohn, Zeiterfassung, IT-Systeme, E-Mail-Monitoring etc. Pflicht nach Art. 13 DSGVO.</div>
+        <div class="dtags"><span class="tag t-must">BEI STELLENANTRITT</span><span class="tag t-eu">Art. 13 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1Eq-EAdH1hbpcJoMt3aBEcWLNM0WVsLc-/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1hIXoD2RKVqRBJyOIsG1rFF76u3auWNiD/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <a href="https://drive.google.com/drive/u/3/folders/1ArGPLsvpByJDFH1C2hEXfK9Q_kgoTslD" target="_blank" class="cat-drive-btn">📂 <span>Ordner öffnen</span></a>
+    <div class="dc ess">
+      <div>
+        <div class="dn">Datenschutzhinweise Bewerber/innen</div>
+        <div class="dw">Für den Recruiting-Prozess — im Stelleninserat oder auf der Karriereseite verlinken. Pflicht bevor eine Bewerbung eingeht.</div>
+        <div class="dtags"><span class="tag t-must">RECRUITING</span><span class="tag t-eu">Art. 13 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1RUV7MEeI1WqL9rmm67iidZfZhGWGg4zn/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1gYEPgx5fgud_gT41jKr3fPrs9V33UHGC/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
   </div>
-  <div class="doc-grid">
-    <div class="doc-card" data-cat="usa">
-      <div class="doc-card-top"><div class="doc-icon">🏛️</div><div class="doc-name">California Privacy Notice (CCPA / CPRA)</div></div>
-      <div class="doc-desc">Datenschutzerklärung für California-Kunden. Pflicht wenn Sie Daten von kalifornischen Einwohnern bearbeiten.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1ArGPLsvpByJDFH1C2hEXfK9Q_kgoTslD" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+
+  <div class="doc-group">
+    <div class="dg-title">Onboarding & Offboarding</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">Onboarding-Checkliste Datenzugang</div>
+        <div class="dw">Dokumentiert welche Systeme, Daten und Berechtigungen bei Stellenantritt erteilt wurden. Setzt Need-to-Know-Prinzip um — Mitarbeitende erhalten nur Zugriff was sie für ihre Aufgabe brauchen.</div>
+        <div class="dtags"><span class="tag t-must">ONBOARDING</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1KQjSEqsiI76hzVyVA4XzKl4oiEAgMcX_/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1-THLyDRn6MmWke6O-gBAPc9tpb4O_YJf/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="usa">
-      <div class="doc-card-top"><div class="doc-icon">🚫</div><div class="doc-name">CCPA Operations: Do Not Sell & GPC</div></div>
-      <div class="doc-desc">Opt-Out-Mechanismen, Global Privacy Control, Verbraucherrechte nach CCPA/CPRA operativ umsetzen.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1ArGPLsvpByJDFH1C2hEXfK9Q_kgoTslD" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">Offboarding-Checkliste Datenzugang</div>
+        <div class="dw">Stellt sicher dass bei Austritt alle Zugänge entzogen, Geräte zurückgegeben und Daten korrekt behandelt werden. Schützt vor Datenverlust durch ehemalige Mitarbeitende.</div>
+        <div class="dtags"><span class="tag t-must">OFFBOARDING</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1kTEV1gA3jOPCdMq7qL20eSyz9FM_auEl/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/10us2Ba_v6syBZVkofC0UzhQCSTFjvemw/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="usa">
-      <div class="doc-card-top"><div class="doc-icon">🗺️</div><div class="doc-name">US Multi-State Privacy Vergleich</div></div>
-      <div class="doc-desc">Übersicht der Datenschutzgesetze aller US-Bundesstaaten mit aktiven Gesetzen: CA, VA, CO, CT, UT und mehr.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1ArGPLsvpByJDFH1C2hEXfK9Q_kgoTslD" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+  </div>
+
+  <div class="doc-group">
+    <div class="dg-title">Interne Richtlinien</div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Homeoffice / Remote Work Datenschutz-Policy</div>
+        <div class="dw">Regelt Datenschutzpflichten für Remote-Arbeit: sichere WLAN-Verbindung, Bildschirmsperren, keine Dokumente offen liegenlassen, VPN-Nutzung. Für alle Unternehmen mit Home-Office relevant.</div>
+        <div class="dtags"><span class="tag t-opt">EMPFOHLEN</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1oFQcCN6Vvf0meaF8nK8UTWjB9JwrePEB/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1M5LpIDnAYSregdt0Ur-RIJqnlkBKDyS1/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="usa">
-      <div class="doc-card-top"><div class="doc-icon">📬</div><div class="doc-name">CCPA Service Provider Addendum</div></div>
-      <div class="doc-desc">Vertragsanhang für Dienstleister die unter CCPA als Service Provider qualifizieren. Schützt vor Haftung.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1ArGPLsvpByJDFH1C2hEXfK9Q_kgoTslD" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Clean Desk / Clear Screen Policy</div>
+        <div class="dw">Regelt physische Datensicherheit: Dokumente einschliessen, Bildschirm sperren, keine Passwörter auf Post-its. Von Behörden als TOMs positiv bewertet.</div>
+        <div class="dtags"><span class="tag t-opt">EMPFOHLEN</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1mvl3R8i6cPH2cxTrPBQvGsAE4RZkEjul/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1mmH6rNj1WDhvHsBFavD1dxVST0blnh-w/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Datenschutzhinweise Mitarbeitende (nDSG Schweiz)</div>
+        <div class="dw">Schweizer Version der Mitarbeiter-Datenschutzhinweise — nDSG-konform mit Verweisen auf EDÖB und Schweizer Recht. Für Mitarbeitende mit Arbeitsort Schweiz.</div>
+        <div class="dtags"><span class="tag t-opt">CH-SPEZIFISCH</span><span class="tag t-ch">Art. 19 nDSG</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1lhl_DlWisAGgmM4gxTc5v-aeqBQ6o1v8/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/18rd2RvAlasSAnGrNJciBiQAe7QQ9FHf-/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- KATEGORIE 05 -->
-<div class="cat-section" data-cat="asien">
-  <div class="cat-header">
-    <div class="cat-icon">🌏</div>
-    <div>
-      <div class="cat-title">Asien — CN / SG / VN / IN / AU / HK / JP / KR</div>
-      <div class="cat-desc">China PIPL · Australien APPs · Indien DPDPA · Asien Datentransfers Guide</div>
+<!-- WEBSITE -->
+<div class="sec-view" id="sec-website">
+  <div class="sec-sl">Website & Marketing</div>
+  <div class="sec-h">Datenschutzerklärungen & Cookie-Consent</div>
+  <div class="divider"></div>
+  <p class="sec-lead">Jede Website mit Nutzerdaten, Formularen oder Tracking braucht eine Datenschutzerklärung. Cookie-Banner sind nicht optional — aktive Einwilligung ist Pflicht.</p>
+  <div class="doc-group">
+    <div class="dg-title">Datenschutzerklärungen</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">Datenschutzerklärung Website (DSGVO)</div>
+        <div class="dw">Für alle Websites die sich an EU-Nutzer richten. Deckt Cookies, Analytics, Kontaktformulare, Newsletter, Social Media Plugins und Hosting ab. Pflicht nach Art. 13 DSGVO.</div>
+        <div class="dtags"><span class="tag t-must">PFLICHT</span><span class="tag t-eu">Art. 13 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_DSE_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="LINK_DSE_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <a href="https://drive.google.com/drive/u/3/folders/1drPqVyr2FhDZbtCTvB8v24DgVfQIKxGQ" target="_blank" class="cat-drive-btn">📂 <span>Ordner öffnen</span></a>
+    <div class="dc opt">
+      <div>
+        <div class="dn">🇨🇭 Datenschutzerklärung Website (nDSG)</div>
+        <div class="dw">Schweizer Version — nDSG-konform mit EDÖB-Hinweisen. Nötig wenn Ihre Website primär Schweizer Nutzer anspricht oder Ihr Unternehmen in der CH sitzt.</div>
+        <div class="dtags"><span class="tag t-ch">nDSG</span><span class="tag t-de">DE</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_DSE_CH_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+      </div>
+    </div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">App Datenschutzerklärung (DSGVO)</div>
+        <div class="dw">Für mobile Apps und SaaS-Produkte. Deckt App-spezifische Verarbeitungen ab: Geräte-IDs, Push-Benachrichtigungen, In-App-Käufe, Standortdaten.</div>
+        <div class="dtags"><span class="tag t-opt">FÜR APPS</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_APP_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="LINK_APP_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
   </div>
-  <div class="doc-grid">
-    <div class="doc-card" data-cat="asien">
-      <div class="doc-card-top"><div class="doc-icon">🇨🇳</div><div class="doc-name">China PIPL Privacy Notice</div></div>
-      <div class="doc-desc">Datenschutzerklärung nach chinesischem PIPL. Pflicht für alle Unternehmen die Daten chinesischer Einwohner bearbeiten.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1drPqVyr2FhDZbtCTvB8v24DgVfQIKxGQ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+  <div class="doc-group">
+    <div class="dg-title">Cookie & Einwilligung</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">Cookie Policy / Einwilligungsmanagement</div>
+        <div class="dw">Regelt welche Cookies gesetzt werden, wofür, und wie Einwilligungen eingeholt und dokumentiert werden. Enthält Vorlagen für Cookie-Banner-Text und Cookie-Kategorien-Beschreibung.</div>
+        <div class="dtags"><span class="tag t-must">PFLICHT</span><span class="tag t-eu">ePrivacy · DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_COOKIE_DE" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="LINK_COOKIE_EN" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="asien">
-      <div class="doc-card-top"><div class="doc-icon">🔄</div><div class="doc-name">China PIPL Transfer Clauses / CAC SCCs</div></div>
-      <div class="doc-desc">Chinesische Standardvertragsklauseln für grenzüberschreitende Datentransfers aus China. Inkl. CAC Security Assessment Guide.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1drPqVyr2FhDZbtCTvB8v24DgVfQIKxGQ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="asien">
-      <div class="doc-card-top"><div class="doc-icon">🇦🇺</div><div class="doc-name">Australien Privacy Notice (APPs)</div></div>
-      <div class="doc-desc">Datenschutzerklärung nach den australischen Australian Privacy Principles. Für Unternehmen mit australischen Kunden oder Mitarbeitenden.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1drPqVyr2FhDZbtCTvB8v24DgVfQIKxGQ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="asien">
-      <div class="doc-card-top"><div class="doc-icon">🇮🇳</div><div class="doc-name">Indien DPDPA 2023 Privacy Notice</div></div>
-      <div class="doc-desc">Datenschutzerklärung nach dem neuen indischen Digital Personal Data Protection Act 2023. Für Unternehmen mit Indien-Bezug.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1drPqVyr2FhDZbtCTvB8v24DgVfQIKxGQ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="asien">
-      <div class="doc-card-top"><div class="doc-icon">🗺️</div><div class="doc-name">Asien Datentransfers Guide (6 Jurisdiktionen)</div></div>
-      <div class="doc-desc">Übersicht der Transfermechanismen für Singapur, Vietnam, Hongkong, Indien, Japan und Korea. Mit länderspezifischen Anforderungen.</div>
-      <div class="doc-footer"><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1drPqVyr2FhDZbtCTvB8v24DgVfQIKxGQ" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════ -->
-<!-- KATEGORIE 06 -->
-<div class="cat-section" data-cat="website">
-  <div class="cat-header">
-    <div class="cat-icon">🌐</div>
-    <div>
-      <div class="cat-title">Website & Marketing</div>
-      <div class="cat-desc">Datenschutzerklärungen · Cookie Policy · Einwilligungsmanagement · App Privacy</div>
-    </div>
-    <a href="https://drive.google.com/drive/u/3/folders/1SfWiNHE6l2KSBvmjZXO7UIlAVitgm00N" target="_blank" class="cat-drive-btn">📂 <span>Ordner öffnen</span></a>
-  </div>
-  <div class="doc-grid">
-    <div class="doc-card" data-cat="website">
-      <div class="doc-card-top"><div class="doc-icon">🌍</div><div class="doc-name">Datenschutzerklärung Website (DSGVO)</div></div>
-      <div class="doc-desc">Vollständige Website-Datenschutzerklärung nach EU DSGVO. Direkt einsetzbar, alle Pflichtangaben inklusive.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1SfWiNHE6l2KSBvmjZXO7UIlAVitgm00N" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="website">
-      <div class="doc-card-top"><div class="doc-icon">🇨🇭</div><div class="doc-name">Datenschutzerklärung Website (nDSG)</div></div>
-      <div class="doc-desc">Schweizer Version der Website-Datenschutzerklärung nach nDSG. Angepasst an die CH-spezifischen Anforderungen.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><a href="https://drive.google.com/drive/u/3/folders/1SfWiNHE6l2KSBvmjZXO7UIlAVitgm00N" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="website">
-      <div class="doc-card-top"><div class="doc-icon">📱</div><div class="doc-name">Datenschutzerklärung App (DSGVO)</div></div>
-      <div class="doc-desc">Für Mobile Apps und Web-Apps. Deckt App-spezifische Bearbeitungen ab: Gerätedaten, Push-Notifications, Standort.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1SfWiNHE6l2KSBvmjZXO7UIlAVitgm00N" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="website">
-      <div class="doc-card-top"><div class="doc-icon">🍪</div><div class="doc-name">Cookie Policy & Einwilligungsmanagement</div></div>
-      <div class="doc-desc">Erklärt welche Cookies gesetzt werden. Inkl. Einwilligungs-Banner Vorlage und Consent Management Dokumentation.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><a href="https://drive.google.com/drive/u/3/folders/1SfWiNHE6l2KSBvmjZXO7UIlAVitgm00N" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="website">
-      <div class="doc-card-top"><div class="doc-icon">📝</div><div class="doc-name">Einwilligungsformulare (DE / EN / FR)</div></div>
-      <div class="doc-desc">Fertige Formulare für Newsletter-Anmeldungen, Kontaktformulare und andere Einwilligungen in drei Sprachen.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">FR</span><a href="https://drive.google.com/drive/u/3/folders/1SfWiNHE6l2KSBvmjZXO7UIlAVitgm00N" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Einwilligungsformulare (DE / EN / FR)</div>
+        <div class="dw">Fertige Einwilligungsformulare für Newsletter, Marketing-E-Mails, Foto-Veröffentlichungen, Event-Teilnahme. Dreisprachig (DE/EN/FR). DSGVO-konform.</div>
+        <div class="dtags"><span class="tag t-opt">FORMULARE</span><span class="tag t-eu">Art. 7 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="LINK_EINWILL_DE" target="_blank" class="dl-btn dl-de">↓ DE/EN/FR</a>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- KATEGORIE 07 -->
-<div class="cat-section" data-cat="schulung">
-  <div class="cat-header">
-    <div class="cat-icon">🎓</div>
-    <div>
-      <div class="cat-title">Schulungsmodule S01 – S13</div>
-      <div class="cat-desc">11 Schulungsmodule in DE und EN · Interaktive Version auf der Compliance Academy</div>
+<!-- GOVERNANCE -->
+<div class="sec-view" id="sec-governance">
+  <div class="sec-sl">Governance & Audit</div>
+  <div class="sec-h">Dokumentation, Prüfung, Kontrolle</div>
+  <div class="divider"></div>
+  <p class="sec-lead">Datenschutz ist ein laufender Prozess. Diese Dokumente helfen Compliance zu dokumentieren, jährlich zu prüfen und bei Audits nachzuweisen.</p>
+
+  <div class="doc-group">
+    <div class="dg-title">Verarbeitungsverzeichnis (VVT / RoPA)</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">VVT / RoPA — Verarbeitungsverzeichnis Standard</div>
+        <div class="dw">Pflicht für alle Unternehmen. Dokumentiert welche Daten Sie wofür verarbeiten — die Grundlage für alle Datenschutzpflichten. Behörden verlangen es als Erstes bei einer Kontrolle.</div>
+        <div class="dtags"><span class="tag t-must">PFLICHT</span><span class="tag t-eu">Art. 30 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1BQXAM8s_ZFXNtfBpRO4biTtg6q5iK_bm/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/16AuGJJMgDQo9O4YIDDLs81UcZQDPFXqo/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="cat-drive-btn">📂 <span>Ordner öffnen</span></a>
+    <div class="dc opt">
+      <div>
+        <div class="dn">RoPA Ausfüllhilfe & Beispieleinträge</div>
+        <div class="dw">Schritt-für-Schritt-Anleitung zum Ausfüllen des Verarbeitungsverzeichnisses. Mit konkreten Beispieleinträgen für typische Verarbeitungen (HR, CRM, E-Mail-Marketing, Website).</div>
+        <div class="dtags"><span class="tag t-opt">HILFSDOKUMENT</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1ZEfeR1DPIzoYPYCGh0iGul61Sp57uLYK/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1pX9yQXw8QwxDWvjpFMu9fvzlAHLfn8bp/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
   </div>
 
-  <!-- Academy Banner -->
-  <div style="background:var(--forest);border-radius:12px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-    <div style="font-size:28px;">🎓</div>
-    <div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#fff;margin-bottom:4px;">Compliance Academy — Interaktiv</div>
-      <div style="font-size:13px;color:rgba(255,255,255,.55);">Alle Module auch als interaktive Version mit Quiz, Fortschrittsanzeige und Zertifikat.</div>
+  <div class="doc-group">
+    <div class="dg-title">Datenpannen & Incident Response</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">Incident Response Plan Datenpanne</div>
+        <div class="dw">Regelt was bei einem Datenleck zu tun ist: wer informiert wen, welche 72h-Frist gilt, was der Behörde gemeldet wird. Ohne diesen Plan riskieren Sie bei einer Panne zusätzliche Bussen wegen fehlender Vorbereitung.</div>
+        <div class="dtags"><span class="tag t-must">PFLICHT</span><span class="tag t-eu">Art. 33/34 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1DYxKTl_CQ_Ir06wpqv8mb-5Fc0NVtpDA/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1XKR5N3seqnxjXxYReY6XZrsF46ZfoTIY/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <a href="https://zg-academy.vercel.app" target="_blank" style="margin-left:auto;padding:9px 20px;border-radius:8px;background:var(--gold);color:var(--ink);font-size:13px;font-weight:600;white-space:nowrap;">Academy öffnen →</a>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Breach Notification Templates EN</div>
+        <div class="dw">Fertige Musterbenachrichtigungen für Datenpannen: an Aufsichtsbehörde (Art. 33) und an betroffene Personen (Art. 34). In Englisch für internationale Nutzung.</div>
+        <div class="dtags"><span class="tag t-opt">TEMPLATES</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1z3_JLrro1IPccc_jkT_uyC3r-U16oQSL/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
   </div>
 
-  <div class="doc-grid">
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">🔰</div><div class="doc-name">S01 — Datenschutz Grundlagen (Onboarding)</div></div>
-      <div class="doc-desc">Für alle neuen Mitarbeitenden. Was ist Datenschutz, warum ist er wichtig, was sind die Grundregeln im Alltag?</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">Alle MA</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+  <div class="doc-group">
+    <div class="dg-title">Audit & Jahresprüfung</div>
+    <div class="dc ess">
+      <div>
+        <div class="dn">Jahres-Audit-Checkliste DSGVO / nDSG</div>
+        <div class="dw">Strukturierte Jahresprüfung aller Datenschutzpflichten. 50+ Prüfpunkte: VVT aktuell? Alle AVVs vorhanden? TIAs auf dem neuesten Stand? Schulungen dokumentiert? Ergebnis: klare Übersicht offener Punkte.</div>
+        <div class="dtags"><span class="tag t-must">JÄHRLICH</span><span class="tag t-eu">DSGVO</span><span class="tag t-ch">nDSG</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/13YdyEfiLJJy5QGCHqwS0Mp1TFR_jf0p2/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1mucmE5mloltY-P4rcYiGjGQBMXKJ3C59/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">👔</div><div class="doc-name">S02 — Datenschutz für Führungskräfte</div></div>
-      <div class="doc-desc">Verantwortlichkeiten der Führungsebene, Rechenschaftspflicht (Accountability), Datenschutzkultur im Team fördern.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">Management</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Management Reporting Datenschutz</div>
+        <div class="dw">Vorlage für den jährlichen Datenschutzbericht ans Management/Board. KPIs, offene Risiken, erledigte Massnahmen, nächste Schritte. Für die Rechenschaftspflicht (Art. 5 Abs. 2 DSGVO).</div>
+        <div class="dtags"><span class="tag t-opt">FÜR MANAGEMENT</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1rnVVB8uz-GLXdd9mZlUDDcIzMbRW5u08/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1d5Wqecc_5gk2MS_SWZr6cLSDmRPGDuIB/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">💻</div><div class="doc-name">S03 — Datenschutz für IT & Entwicklung</div></div>
-      <div class="doc-desc">Privacy by Design, sichere Entwicklung, Verschlüsselung, Datenminimierung in technischen Systemen.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">IT / Dev</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+  </div>
+
+  <div class="doc-group">
+    <div class="dg-title">Spezial-Dokumentation</div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">DPIA / DSFA — Datenschutz-Folgenabschätzung</div>
+        <div class="dw">Pflicht wenn eine Verarbeitung voraussichtlich hohes Risiko birgt (Art. 35 DSGVO): Profiling, besondere Kategorien im grossen Stil, Überwachung. Mit Schwellenwert-Checkliste zur Prüfung ob DPIA nötig ist.</div>
+        <div class="dtags"><span class="tag t-opt">BEI HOCHRISIKO</span><span class="tag t-eu">Art. 35 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1JbSdfLEjUbjrO2xAYdAKUydKnZkaRJmM/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1H2D9Cm_9kWo2uwb5dII9OGcctPOFm72w/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">🤖</div><div class="doc-name">S04 — AI Literacy: KI verstehen</div></div>
-      <div class="doc-desc">Wie funktioniert KI, welche Risiken gibt es, wie nutzt man KI-Tools datenschutzkonform im Arbeitsalltag?</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">Alle MA</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Interessenabwägung / LIA — Berechtigtes Interesse</div>
+        <div class="dw">Wenn Sie berechtigtes Interesse (Art. 6 Abs. 1 lit. f) als Rechtsgrundlage nutzen, müssen Sie eine Abwägung dokumentieren. Führt durch alle drei Prüfschritte.</div>
+        <div class="dtags"><span class="tag t-opt">BEI BER. INTERESSE</span><span class="tag t-eu">Art. 6(1)(f)</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1xgDDooDS7_JsMt7myvuVhfE2UFQks4oJ/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1pX9xkjTm__RCwYmndm2DFVaUf7FgHCI7/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">✋</div><div class="doc-name">S05 — Betroffenenrechte: Praxisleitfaden</div></div>
-      <div class="doc-desc">Wie man auf Auskunfts-, Lösch- und Berichtigungsanfragen korrekt und fristgerecht reagiert. Mit Fallbeispielen.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">Legal / HR</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Betroffenenrechte — Prozess & Musterantworten</div>
+        <div class="dw">Regelt intern wie Auskunfts-, Lösch- und Berichtigungsanfragen bearbeitet werden. Mit Musterantworten. Pflicht: Antwort innert 30 Tagen, Bearbeitung dokumentieren.</div>
+        <div class="dtags"><span class="tag t-opt">PROZESS</span><span class="tag t-eu">Art. 15–22</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1OgwiS6c0k_WnGHR7PP4aFygfOpSyL8Jt/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/120ObLanzdQ3PQ3NGcv8AVbdjv3NOgmSl/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">🍪</div><div class="doc-name">S06 — Cookies & Tracking Compliance</div></div>
-      <div class="doc-desc">Cookie-Banner, Tracking-Tools, einwilligungsbasiertes Marketing und Google Analytics datenschutzkonform einsetzen.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">Marketing/IT</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Lösch- und Aufbewahrungskonzept</div>
+        <div class="dw">Definiert wie lange welche Daten aufbewahrt werden und wann sie gelöscht werden. Pflicht nach Speicherbegrenzungsprinzip (Art. 5(1)(e)).</div>
+        <div class="dtags"><span class="tag t-must">PFLICHT</span><span class="tag t-eu">Art. 5(1)(e)</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/11RmDxeK42Zz68shdM_xQUDpEOR37IxGz/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1L7Iiaj2TEnxZmUiY304Kd2Mg4Ot-CTTn/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">👥</div><div class="doc-name">S07 — HR & Recruiting: Bewerberdaten</div></div>
-      <div class="doc-desc">Datenschutz im gesamten Recruiting-Prozess: Bewerberdaten, Speicherfristen, Muster-Datenschutzhinweise für Bewerber.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">HR</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">DPO-Bestellung & Interessenkonflikt-Policy</div>
+        <div class="dw">Bestellungsurkunde + Policy zur Unabhängigkeit des DSB/DPO. Enthält Interessenkonflikt-Check und Rollenbeschreibung.</div>
+        <div class="dtags"><span class="tag t-opt">DPO</span><span class="tag t-eu">Art. 37–39</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1j_UhSEy4qjf_DTRtKRtw3IaCOvnh0Zc6/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1dp5E1yrH6d02p_ENAAD17nPbHi9wF97n/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">📣</div><div class="doc-name">S08 — Marketing, Einwilligung & CCPA</div></div>
-      <div class="doc-desc">E-Mail-Marketing, Opt-In/Opt-Out, Newsletter-Compliance und CCPA-Anforderungen für Marketing-Teams.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">Marketing</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">🛒</div><div class="doc-name">S10 — Einkauf, Legal & Vendor DPA</div></div>
-      <div class="doc-desc">Wie man AVVs prüft und verhandelt, Checkliste für Lieferantenverträge, Subprocessor-Management in der Praxis.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">Einkauf/Legal</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">⚖️</div><div class="doc-name">S12 — EU AI Act für Entscheider</div></div>
-      <div class="doc-desc">Kompakter Überblick für C-Level und Legal: Risikoklassen, Verbote, Compliance-Anforderungen, Timeline des EU AI Act.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">C-Level</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
-    </div>
-    <div class="doc-card" data-cat="schulung">
-      <div class="doc-card-top"><div class="doc-icon">🌍</div><div class="doc-name">S13 — Internationale Datentransfers</div></div>
-      <div class="doc-desc">SCCs, TIA, Angemessenheitsbeschlüsse und Drittlandtransfers verständlich erklärt. Mit Entscheidungsbaum.</div>
-      <div class="doc-footer"><span class="lang-badge">DE</span><span class="lang-badge">EN</span><span class="lang-badge">Legal/IT</span><a href="https://drive.google.com/drive/u/3/folders/1h1kNjdWqfBW4Gdnf1dBsDhKmLNv79z2f" target="_blank" class="doc-btn">📂 Öffnen</a></div>
+    <div class="dc opt">
+      <div>
+        <div class="dn">Art. 27 DSGVO — EU-Vertreter Bestellung</div>
+        <div class="dw">Pflicht für Unternehmen ausserhalb der EU die EU-Bürger ansprechen ohne EU-Niederlassung. Benennt einen EU-Vertreter als Anlaufstelle für Betroffene und Behörden.</div>
+        <div class="dtags"><span class="tag t-opt">OHNE EU-SITZ</span><span class="tag t-eu">Art. 27 DSGVO</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div>
+      </div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1K6LJbUIgot6Pw6xZDDem525NPVmYtqdF/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1oZx2_-XqafRPXuPZzlLQDKk9ZWpk5n49/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- EMPTY STATE -->
-<div class="empty" id="empty-state" style="display:none;">
-  <div class="empty-icon">🔍</div>
-  <div>Kein Dokument gefunden. Versuchen Sie einen anderen Suchbegriff.</div>
+<!-- SCHWEIZ -->
+<div class="sec-view" id="sec-ch">
+  <div class="sec-sl">Schweiz — nDSG</div>
+  <div class="sec-h">🇨🇭 Schweiz-spezifische Dokumente</div>
+  <div class="divider"></div>
+  <p class="sec-lead">Das revidierte Datenschutzgesetz (nDSG) gilt seit 1. September 2023. Die Personalstrafe von bis zu CHF 250'000 trifft Manager persönlich — nicht das Unternehmen.</p>
+  <div class="alert a-red"><strong>nDSG-Personalstrafe:</strong> Im Gegensatz zur DSGVO (Unternehmensbusse) bestraft das nDSG natürliche Personen — Geschäftsführer, DPO, verantwortliche Manager — mit bis zu CHF 250'000 persönlich.</div>
+
+  <div class="doc-group">
+    <div class="dg-title">nDSG-spezifische Dokumente</div>
+    <div class="dc ess">
+      <div><div class="dn">nDSG Bearbeitungsverzeichnis (CH-Format)</div>
+      <div class="dw">nDSG-spezifisches Format für das Verarbeitungsverzeichnis nach Art. 12 nDSG. Angepasst an Schweizer Terminologie. Ergänzend zum DSGVO-VVT wenn Sie auch EU-Kunden haben.</div>
+      <div class="dtags"><span class="tag t-must">PFLICHT CH</span><span class="tag t-ch">Art. 12 nDSG</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1zwTmbdue-EKoISfUdcrF8sXtmTSbFCv7/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/1h_Zd3kD7wVr0gCybz7o6JX4pvMJ3teNj/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
+    <div class="dc ess">
+      <div><div class="dn">Datenschutzhinweise Mitarbeitende (nDSG)</div>
+      <div class="dw">Schweizer Version — nDSG-konform mit korrekten Verweisen auf EDÖB und Schweizer Recht. Für Mitarbeitende mit Arbeitsort Schweiz.</div>
+      <div class="dtags"><span class="tag t-must">CH-MITARBEITENDE</span><span class="tag t-ch">Art. 19 nDSG</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1lhl_DlWisAGgmM4gxTc5v-aeqBQ6o1v8/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/18rd2RvAlasSAnGrNJciBiQAe7QQ9FHf-/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
+    <div class="dc opt">
+      <div><div class="dn">CH Standarddatenschutzklauseln EDÖB</div>
+      <div class="dw">Vom EDÖB anerkannte Standardklauseln für Transfers aus der Schweiz in Drittländer. Wenn Ihr Unternehmen in CH sitzt: diese zusätzlich zu EU SCCs — nicht stattdessen.</div>
+      <div class="dtags"><span class="tag t-ch">Art. 16 nDSG</span><span class="tag t-de">DE</span></div></div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1m_MlLxOtZaV302Olr8Px-Ak9yc_lyI6x/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+      </div>
+    </div>
+    <div class="dc opt">
+      <div><div class="dn">nDSG vs. GDPR Vergleich</div>
+      <div class="dw">Übersicht der wichtigsten Unterschiede zwischen nDSG und DSGVO. Ideal für Teams die bisher nur DSGVO kannten — zeigt was neu ist und was Handlungsbedarf besteht.</div>
+      <div class="dtags"><span class="tag t-opt">ORIENTIERUNG</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1YmZ7SosmFOGmFxT8sc7OuUD94FQIpfLl/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
+  </div>
 </div>
 
-</main>
+<!-- UK -->
+<div class="sec-view" id="sec-uk">
+  <div class="sec-sl">United Kingdom</div>
+  <div class="sec-h">🇬🇧 UK GDPR — UK-spezifische Dokumente</div>
+  <div class="divider"></div>
+  <p class="sec-lead">UK GDPR ist weitgehend identisch mit EU DSGVO — aber eine separate Rechtsordnung. EU-Angemessenheitsbeschluss bis 2031 verlängert. Für Transfers AUS UK in Drittländer: UK IDTA statt EU SCCs.</p>
+  <div class="alert a-green"><strong>EU→UK Transfers:</strong> Kein Mechanismus nötig — Angemessenheitsbeschluss gilt bis Ende 2031. UK→Drittland: UK IDTA erforderlich (nicht EU SCCs).</div>
+  <div class="doc-group">
+    <div class="dg-title">UK-spezifische Dokumente</div>
+    <div class="dc ess">
+      <div><div class="dn">UK Privacy Notice (Website)</div>
+      <div class="dw">Datenschutzerklärung für UK-Websites und UK-Nutzer — UK GDPR-konform mit ICO-Anforderungen. Nötig wenn Ihre Website UK-Nutzer anspricht oder Sie eine UK-Niederlassung haben.</div>
+      <div class="dtags"><span class="tag t-must">UK-NUTZER</span><span class="tag t-uk">UK GDPR</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap"><a href="https://drive.google.com/file/d/1U_NF7ENRkeTuk1XF9vYxXNFmqUuCJ-Xf/view" target="_blank" class="dl-btn dl-en">↓ EN</a></div>
+    </div>
+    <div class="dc ess">
+      <div><div class="dn">UK Employee Privacy Notice</div>
+      <div class="dw">Datenschutzhinweise für Mitarbeitende mit Arbeitsort UK. UK GDPR-konform — Aushändigung bei Stellenantritt Pflicht.</div>
+      <div class="dtags"><span class="tag t-must">UK-MITARBEITENDE</span><span class="tag t-uk">UK GDPR</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap"><a href="https://drive.google.com/file/d/17i3ZVYXsV_RVzbc8eHtCyauIHSsD1y4d/view" target="_blank" class="dl-btn dl-en">↓ EN</a></div>
+    </div>
+    <div class="dc opt">
+      <div><div class="dn">ICO Registration Checklist</div>
+      <div class="dw">Prüft ob Ihr Unternehmen sich beim ICO registrieren muss — Pflicht für die meisten UK-Datenverarbeiter gegen eine jährliche Gebühr.</div>
+      <div class="dtags"><span class="tag t-opt">ICO-REGISTRIERUNG</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap"><a href="https://drive.google.com/file/d/1uGHSVLvIMP48lyA_vYwII0jXaMctUlN4/view" target="_blank" class="dl-btn dl-en">↓ EN</a></div>
+    </div>
+    <div class="dc opt">
+      <div><div class="dn">UK SAR Response Templates</div>
+      <div class="dw">Musterantworten für Subject Access Requests (SAR) nach UK GDPR. Frist: 1 Monat. Vorlagen für vollständige Auskunft, Fristverlängerung, Ablehnung.</div>
+      <div class="dtags"><span class="tag t-opt">BETROFFENENRECHTE</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap"><a href="https://drive.google.com/file/d/1e0lI4JqcRPmt9WPxuLEaxVix631wRb8F/view" target="_blank" class="dl-btn dl-en">↓ EN</a></div>
+    </div>
+  </div>
+</div>
 
-<footer>
-  <div>© 2026 Zehnder Governance · <a href="mailto:zehndergovernance@gmail.com">zehndergovernance@gmail.com</a> · <a href="https://zehndergovernance.com">zehndergovernance.com</a></div>
-  <div style="margin-top:6px;font-size:11px;">Template-Bibliothek · Compliance Portal · Exklusiv für Abonnenten</div>
-</footer>
+<!-- USA -->
+<div class="sec-view" id="sec-us">
+  <div class="sec-sl">USA — CCPA/CPRA</div>
+  <div class="sec-h">🇺🇸 USA-spezifische Dokumente</div>
+  <div class="divider"></div>
+  <p class="sec-lead">CCPA/CPRA gilt für Unternehmen die bestimmte Schwellenwerte überschreiten und Daten von Kaliforniern verarbeiten. 19 US-Bundesstaaten haben eigene Datenschutzgesetze.</p>
+  <div class="doc-group">
+    <div class="dg-title">CCPA/CPRA Dokumente</div>
+    <div class="dc ess">
+      <div><div class="dn">California Privacy Notice (CCPA/CPRA)</div>
+      <div class="dw">Pflicht für CCPA-pflichtige Unternehmen. Enthält alle Pflichtangaben: Kategorien gesammelter Daten, Zwecke, Weitergaben, Verbraucherrechte, Do Not Sell-Opt-Out.</div>
+      <div class="dtags"><span class="tag t-must">CCPA-PFLICHTIGE</span><span class="tag t-us">CCPA · CPRA</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap"><a href="LINK_CCPA_NOTICE_EN" target="_blank" class="dl-btn dl-en">↓ EN</a></div>
+    </div>
+    <div class="dc ess">
+      <div><div class="dn">CCPA Service Provider Addendum</div>
+      <div class="dw">Ergänzung zu bestehenden Verträgen mit US-Dienstleistern — regelt Service Provider Pflichten unter CCPA. Entspricht dem AVV unter DSGVO, aber CCPA-spezifisch formuliert.</div>
+      <div class="dtags"><span class="tag t-must">US-DIENSTLEISTER</span><span class="tag t-us">CCPA · CPRA</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap"><a href="LINK_CCPA_ADDENDUM_EN" target="_blank" class="dl-btn dl-en">↓ EN</a></div>
+    </div>
+    <div class="dc opt">
+      <div><div class="dn">CCPA Operations — Do Not Sell, GPC, Rights</div>
+      <div class="dw">Operativer Leitfaden: Do Not Sell Button, Global Privacy Control (GPC), Verbraucherrechte-Prozesse, Opt-Out-Mechanismus.</div>
+      <div class="dtags"><span class="tag t-opt">OPERATIV</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap"><a href="LINK_CCPA_OPS_EN" target="_blank" class="dl-btn dl-en">↓ EN</a></div>
+    </div>
+    <div class="dc opt">
+      <div><div class="dn">TIA USA — FISA 702, CLOUD Act, DPF</div>
+      <div class="dw">Transfer Impact Assessment für US-Transfers — vorausgefüllt. Zuerst DPF-Status prüfen (dataprivacyframework.gov) — falls zertifiziert: kein TIA nötig.</div>
+      <div class="dtags"><span class="tag t-must">TIA USA</span><span class="tag t-de">DE</span><span class="tag t-en">EN</span></div></div>
+      <div class="dl-wrap">
+        <a href="https://drive.google.com/file/d/1CZ62q6F8txi3KRiRb8ob4G4Ah2xRrGd-/view" target="_blank" class="dl-btn dl-de">↓ DE</a>
+        <a href="https://drive.google.com/file/d/10CWKfj0Tq-AWTV7HT2fHuMo1Do4q-HTY/view" target="_blank" class="dl-btn dl-en">↓ EN</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MATRIX -->
+<div class="sec-view" id="sec-matrix">
+  <div class="sec-sl">Übersicht</div>
+  <div class="sec-h">Länder-Matrix — Was braucht es wo?</div>
+  <div class="divider"></div>
+  <table>
+    <tr><th>Land</th><th>EU Adequacy</th><th>AVV nötig?</th><th>Transfer EU→</th><th>TIA nötig?</th></tr>
+    <tr><td>🇨🇭 Schweiz</td><td class="c-ok">✓ JA</td><td class="c-ok">Ja (nDSG Art.9)</td><td class="c-ok">Keiner nötig</td><td class="c-no">Nein</td></tr>
+    <tr><td>🇪🇺 EU / EWR</td><td>—</td><td class="c-ok">Ja (Art.28)</td><td class="c-ok">Intern (EWR)</td><td class="c-no">Nein</td></tr>
+    <tr><td>🇬🇧 UK</td><td class="c-ok">✓ bis 2031</td><td class="c-ok">Ja</td><td class="c-ok">Keiner nötig</td><td class="c-no">Nein</td></tr>
+    <tr><td>🇷🇸 Serbien</td><td class="c-ok">✓ JA</td><td class="c-ok">Ja</td><td class="c-ok">Keiner nötig</td><td class="c-no">Nein</td></tr>
+    <tr><td>🇯🇵 Japan</td><td class="c-ok">✓ JA</td><td class="c-ok">Ja</td><td class="c-ok">Keiner nötig</td><td class="c-no">Nein</td></tr>
+    <tr><td>🇰🇷 Südkorea</td><td class="c-ok">✓ JA</td><td class="c-ok">Ja</td><td class="c-ok">Keiner nötig</td><td class="c-no">Nein</td></tr>
+    <tr><td>🇺🇸 USA (DPF-zert.)</td><td class="c-ok">✓ wenn DPF</td><td class="c-ok">Ja</td><td class="c-ok">DPF-Zertifizierung</td><td class="c-req">Empfohlen</td></tr>
+    <tr><td>🇺🇸 USA (kein DPF)</td><td class="c-no">✗ NEIN</td><td class="c-ok">Ja</td><td class="c-req">EU SCCs Modul 2</td><td class="c-req">PFLICHT</td></tr>
+    <tr><td>🇨🇳 China</td><td class="c-no">✗ NEIN</td><td class="c-ok">Ja</td><td class="c-req">EU SCCs + CAC</td><td class="c-req">PFLICHT · KRITISCH</td></tr>
+    <tr><td>🇮🇳 Indien</td><td class="c-no">✗ NEIN</td><td class="c-ok">Ja</td><td class="c-req">EU SCCs Modul 2</td><td class="c-req">PFLICHT</td></tr>
+    <tr><td>🇧🇷 Brasilien</td><td class="c-no">✗ NEIN</td><td class="c-ok">Ja</td><td class="c-req">EU SCCs Modul 2</td><td class="c-req">PFLICHT</td></tr>
+    <tr><td>🇻🇳 Vietnam</td><td class="c-no">✗ NEIN</td><td class="c-ok">Ja</td><td class="c-req">EU SCCs + Einwilligung</td><td class="c-req">PFLICHT · ERHÖHT</td></tr>
+    <tr><td>🇸🇬 Singapur</td><td class="c-no">✗ NEIN</td><td class="c-ok">Ja</td><td class="c-req">EU SCCs</td><td class="c-req">PFLICHT</td></tr>
+  </table>
+  <div class="alert a-gold" style="margin-top:16px;"><strong>Legende:</strong> ✓ JA = EU-Angemessenheitsbeschluss — kein Transfermechanismus nötig. ✗ NEIN = EU SCCs + TIA erforderlich. DPF-zert. = Data Privacy Framework zertifiziert (dataprivacyframework.gov prüfen).</div>
+</div>
+
+<!-- ALLE -->
+<div class="sec-view" id="sec-alle">
+  <div class="sec-sl">Vollständige Bibliothek</div>
+  <div class="sec-h">Alle Dokumente — 100+ Vorlagen</div>
+  <div class="divider"></div>
+  <p style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:20px;">Nutzen Sie die thematischen Abschnitte in der Sidebar für Dokumente mit Erklärungen. Diese Übersicht zeigt alle verfügbaren Dokumente nach Kategorie.</p>
+  <div class="doc-group">
+    <div class="dg-title">01 — Datenschutz CH / EU / UK</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.9;">VVT DE+EN · VVT Ausfüllhilfe DE+EN · Vendor Register DE+EN · DPIA DE+EN · DPIA Schwellenwert DE+EN · Interne Datenschutz-Policy DE+EN · Homeoffice DE+EN · Clean Desk DE+EN · Incident Response DE+EN · Betroffenenrechte DE+EN · TOMs DE · Onboarding DE+EN · Offboarding DE+EN · Mitarbeiter-Hinweise DSGVO DE+EN · Bewerber-Hinweise DE+EN · EU-Vertreter Art.27 DE+EN · Management-Reporting DE+EN · Mitarbeiter-Hinweise nDSG DE+EN · nDSG VVT DE+EN · CH SCCs EDÖB DE · nDSG vs GDPR EN · UK Privacy Notice EN · UK Employee Privacy Notice EN · ICO Checklist EN · UK SAR Templates EN · Breach Notification Templates EN · DPIA Register EN · DPO-Bestellung DE+EN · Jahres-Audit DE+EN · Code of Conduct DE+EN · Interessenabwägung LIA DE+EN · Löschkonzept DE+EN · Vendor Due Diligence DE+EN · Whistleblowing EN · Privacy by Design DE+EN · Retention Schedule EN · Datenpannen-Register DE</p>
+  </div>
+  <div class="doc-group">
+    <div class="dg-title">02 — Verträge & Transfers</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.9;">AVV Standard DE+EN · AVV Kurzversion DE+EN · Datenschutzklauseln Lieferanten DE+EN · SubProcessor-Prozess DE+EN · TIA Framework DE+EN · EU SCCs Modul 2 C2P DE+EN · UK IDTA EN · TIA Indien/Brasilien/Vietnam EN · TIA Serbien EN · Transfer-Entscheidungsbaum DE · TIA Allgemein DE+EN · TIA USA DE+EN · TIA China DE+EN · Joint Controller Agreement DE+EN</p>
+  </div>
+  <div class="doc-group">
+    <div class="dg-title">03 — KI / EU AI Act</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.9;">KI-Richtlinie Mitarbeitende DE+EN · EU AI Act Enterprise Toolkit DE+EN · AI Act Konformitätsbewertung DE+EN · CAC Security Assessment Guide EN · AI Literacy Training DE+EN · EU AI Act Entscheider-Schulung DE+EN</p>
+  </div>
+  <div class="doc-group">
+    <div class="dg-title">04 — USA / CCPA</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.9;">California Privacy Notice EN · CCPA Operations Guide EN · CCPA Service Provider Addendum EN · US Multi-State Privacy DE · Marketing Consent CCPA DE+EN</p>
+  </div>
+  <div class="doc-group">
+    <div class="dg-title">05 — Asien (CN / SG / VN / IN)</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.9;">Asia Data Transfers Guide EN · PIPL Privacy Notice EN · PIPL Transfer Clauses EN · India Privacy Notice (DPDPA) EN · Australia Privacy Notice EN</p>
+  </div>
+  <div class="doc-group">
+    <div class="dg-title">06 — Website & Marketing</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.9;">Datenschutzerklärung Website DSGVO DE+EN · App Privacy Notice DE+EN · nDSG Website-Datenschutzerklärung DE · Cookie Policy DE+EN · Einwilligungsformulare DE/EN/FR</p>
+  </div>
+</div>
+
+</div><!-- end main -->
+</div><!-- end layout -->
 
 <script>
-function filterCat(cat) {
-  document.querySelectorAll('.ftag').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  document.querySelectorAll('.cat-section').forEach(s => {
-    s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none';
+function show(id){
+  document.querySelectorAll('.sec-view').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.sb-btn').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('sec-'+id);
+  if(el)el.classList.add('active');
+  document.querySelectorAll('.sb-btn').forEach(b=>{
+    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+id+"'"))b.classList.add('active');
   });
-  checkEmpty();
+  document.getElementById('srDiv').classList.remove('active');
+  window.scrollTo(0,0);
 }
-
-function searchDocs(query) {
-  const q = query.toLowerCase().trim();
-  let anyVisible = false;
-  document.querySelectorAll('.doc-card').forEach(card => {
-    const text = card.textContent.toLowerCase();
-    const match = !q || text.includes(q);
-    card.style.display = match ? '' : 'none';
-    if (match) anyVisible = true;
-  });
-  document.querySelectorAll('.cat-section').forEach(section => {
-    const visibleCards = [...section.querySelectorAll('.doc-card')].some(c => c.style.display !== 'none');
-    section.style.display = visibleCards ? '' : 'none';
-  });
-  document.getElementById('empty-state').style.display = anyVisible ? 'none' : '';
-}
-
-function checkEmpty() {
-  const anyVisible = [...document.querySelectorAll('.cat-section')].some(s => s.style.display !== 'none');
-  document.getElementById('empty-state').style.display = anyVisible ? 'none' : '';
+function doSearch(q){
+  const sr=document.getElementById('srDiv');
+  if(!q||q.length<2){sr.classList.remove('active');return;}
+  document.querySelectorAll('.sec-view').forEach(s=>s.classList.remove('active'));
+  sr.classList.add('active');
+  const all=document.querySelectorAll('.dc');
+  const res=[];
+  q=q.toLowerCase();
+  all.forEach(c=>{if(c.textContent.toLowerCase().includes(q))res.push(c.cloneNode(true));});
+  sr.innerHTML=`<div class="sr-count">${res.length} Dokument${res.length!==1?'e':''} für "${q}"</div>`;
+  res.forEach(r=>sr.appendChild(r));
+  if(!res.length)sr.innerHTML+='<p style="color:rgba(255,255,255,.4);font-size:13px;">Keine Treffer. Versuchen Sie: AVV, TIA, Privacy Notice, Audit, DPIA...</p>';
 }
 </script>
 </body>
