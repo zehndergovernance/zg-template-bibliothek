@@ -82,9 +82,67 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .sr-results{display:none;}.sr-results.active{display:block;}
 .sr-count{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px;}
 @media(max-width:780px){.layout{grid-template-columns:1fr;}.sidebar{position:static;height:auto;}}
+
+/* AUTH OVERLAY */
+#authOverlay{position:fixed;inset:0;z-index:9999;background:var(--ink);display:flex;align-items:center;justify-content:center;padding:24px;}
+#authOverlay.hidden{display:none;}
+.auth-box{max-width:420px;width:100%;text-align:center;}
+.auth-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#fff;letter-spacing:.05em;margin-bottom:8px;}
+.auth-logo em{color:var(--gold);font-style:normal;}
+.auth-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:#fff;margin-bottom:8px;}
+.auth-sub{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:32px;line-height:1.6;}
+.auth-form{display:flex;flex-direction:column;gap:12px;}
+.auth-input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.auth-input:focus{border-color:rgba(192,140,40,.5);}
+.auth-btn{background:var(--gold);color:var(--ink);border:none;border-radius:8px;padding:13px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s;}
+.auth-btn:hover{background:var(--gold-l);}
+.auth-btn:disabled{opacity:.5;cursor:not-allowed;}
+.auth-msg{font-size:12px;color:rgba(255,255,255,.4);margin-top:8px;min-height:18px;}
+.auth-msg.error{color:#ef9a9a;}
+.auth-msg.success{color:#81c784;}
+.auth-divider{border:none;border-top:1px solid rgba(255,255,255,.07);margin:20px 0;}
+.auth-links{font-size:12px;color:rgba(255,255,255,.3);}
+.auth-links a{color:var(--gold);}
+.auth-no-access{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:28px;display:none;}
+.auth-no-access.show{display:block;}
+.auth-spinner{display:none;font-size:13px;color:rgba(255,255,255,.4);}
+.auth-spinner.show{display:block;}
 </style>
 </head>
 <body>
+
+<!-- AUTH OVERLAY -->
+<div id="authOverlay">
+  <div class="auth-box">
+    <div class="auth-logo">ZEHNDER <em>GOVERNANCE</em></div>
+    <h2 class="auth-title">Template-Bibliothek</h2>
+    <p class="auth-sub">Exklusiv für Flatrate-Kunden — 130+ Vorlagen, alle Jurisdiktionen</p>
+
+    <div id="loginForm" class="auth-form">
+      <input id="authEmail" class="auth-input" type="email" placeholder="E-Mail Adresse">
+      <input id="authPass" class="auth-input" type="password" placeholder="Passwort">
+      <button class="auth-btn" onclick="doLogin()">Einloggen →</button>
+      <div id="authMsg" class="auth-msg"></div>
+    </div>
+
+    <div id="noAccess" class="auth-no-access">
+      <p style="color:#fff;font-weight:600;margin-bottom:8px;">Kein Zugang für dieses Konto</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:16px;">Die Template-Bibliothek ist Teil der Compliance Flatrate Standard (CHF 149/Mt.) oder Enterprise (CHF 299/Mt.).</p>
+      <a href="https://zehndergovernance.com/#flatrate" style="display:inline-block;background:var(--gold);color:var(--ink);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">Jetzt abonnieren →</a>
+      <br><br>
+      <a href="#" onclick="doLogout();return false;" style="font-size:12px;color:rgba(255,255,255,.3);">Anderes Konto verwenden</a>
+    </div>
+
+    <div id="authSpinner" class="auth-spinner">Prüfe Zugangsberechtigung...</div>
+
+    <div class="auth-divider"></div>
+    <div class="auth-links">
+      <a href="https://zg-portal-flatrate.vercel.app">Passwort vergessen?</a> &nbsp;·&nbsp;
+      <a href="https://zehndergovernance.com">Zurück zur Website</a>
+    </div>
+  </div>
+</div>
+
 <nav>
   <a href="https://zehndergovernance.com"><span class="logo">ZEHNDER <em>GOVERNANCE</em></span></a>
   <span class="nbadge">TEMPLATE-BIBLIOTHEK</span>
@@ -873,6 +931,77 @@ function doSearch(q){
   res.forEach(r=>sr.appendChild(r));
   if(!res.length)sr.innerHTML+='<p style="color:rgba(255,255,255,.4);font-size:13px;">Keine Treffer. Versuchen Sie: AVV, TIA, Privacy Notice, Audit, DPIA...</p>';
 }
+</script>
+
+<script>
+const SUPA_URL = 'https://rjvdmyjuqtchznlhffzo.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqdmRteWp1cXRjaHpubGhmZnpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk2NTYzMjgsImV4cCI6MjAyNTIzMjMyOH0.GJud2RrFRKRqGMlmWFJBBFuLsaxKD7Vy8usDXqNMjuI';
+const supabase = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+
+const ALLOWED_PLANS = ['standard', 'enterprise'];
+
+async function checkAuth() {
+  const {data:{session}} = await supabase.auth.getSession();
+  if (!session) { showLogin(); return; }
+  await checkAccess(session.user);
+}
+
+async function checkAccess(user) {
+  showSpinner();
+  const {data} = await supabase
+    .from('user_subscriptions')
+    .select('plan,status')
+    .eq('user_id', user.id)
+    .in('plan', ALLOWED_PLANS)
+    .eq('status', 'active')
+    .maybeSingle();
+
+  if (data) {
+    grantAccess();
+  } else {
+    showNoAccess();
+  }
+}
+
+function grantAccess() {
+  document.getElementById('authOverlay').classList.add('hidden');
+}
+
+function showLogin() {
+  document.getElementById('loginForm').style.display = 'flex';
+  document.getElementById('noAccess').classList.remove('show');
+  document.getElementById('authSpinner').classList.remove('show');
+}
+
+function showNoAccess() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('noAccess').classList.add('show');
+  document.getElementById('authSpinner').classList.remove('show');
+}
+
+function showSpinner() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('authSpinner').classList.add('show');
+}
+
+async function doLogin() {
+  const email = document.getElementById('authEmail').value.trim();
+  const pass = document.getElementById('authPass').value;
+  const msg = document.getElementById('authMsg');
+  if (!email || !pass) { msg.className='auth-msg error'; msg.textContent='Bitte E-Mail und Passwort eingeben.'; return; }
+  msg.className='auth-msg'; msg.textContent='Einloggen...';
+  const {data, error} = await supabase.auth.signInWithPassword({email, password: pass});
+  if (error) { msg.className='auth-msg error'; msg.textContent='E-Mail oder Passwort falsch.'; return; }
+  await checkAccess(data.user);
+}
+
+async function doLogout() {
+  await supabase.auth.signOut();
+  location.reload();
+}
+
+// Run on load
+checkAuth();
 </script>
 </body>
 </html>
