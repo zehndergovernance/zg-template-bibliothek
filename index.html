@@ -937,19 +937,20 @@ function doSearch(q){
 <script>
 const SUPA_URL = 'https://rjvdmyjuqtchznlhffzo.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqdmRteWp1cXRjaHpubGhmZnpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk2NTYzMjgsImV4cCI6MjAyNTIzMjMyOH0.GJud2RrFRKRqGMlmWFJBBFuLsaxKD7Vy8usDXqNMjuI';
-const supabase = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+const {createClient} = supabase;
+const sb = createClient(SUPA_URL, SUPA_KEY);
 
 const ALLOWED_PLANS = ['standard', 'enterprise'];
 
 async function checkAuth() {
-  const {data:{session}} = await supabase.auth.getSession();
+  const {data:{session}} = await sb.auth.getSession();
   if (!session) { showLogin(); return; }
   await checkAccess(session.user);
 }
 
 async function checkAccess(user) {
   showSpinner();
-  const {data} = await supabase
+  const {data} = await sb
     .from('user_subscriptions')
     .select('plan,status')
     .eq('user_id', user.id)
@@ -991,13 +992,13 @@ async function doLogin() {
   const msg = document.getElementById('authMsg');
   if (!email || !pass) { msg.className='auth-msg error'; msg.textContent='Bitte E-Mail und Passwort eingeben.'; return; }
   msg.className='auth-msg'; msg.textContent='Einloggen...';
-  const {data, error} = await supabase.auth.signInWithPassword({email, password: pass});
+  const {data, error} = await sb.auth.signInWithPassword({email, password: pass});
   if (error) { msg.className='auth-msg error'; msg.textContent='E-Mail oder Passwort falsch.'; return; }
   await checkAccess(data.user);
 }
 
 async function doLogout() {
-  await supabase.auth.signOut();
+  await sb.auth.signOut();
   location.reload();
 }
 
