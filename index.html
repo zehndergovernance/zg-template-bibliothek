@@ -939,6 +939,7 @@ const SUPA_URL = 'https://rjvdmyjuqtchznlhffzo.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqdmRteWp1cXRjaHpubGhmZnpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk2NTYzMjgsImV4cCI6MjAyNTIzMjMyOH0.GJud2RrFRKRqGMlmWFJBBFuLsaxKD7Vy8usDXqNMjuI';
 const {createClient} = supabase;
 const sb = createClient(SUPA_URL, SUPA_KEY);
+window.sb = sb;
 
 const ALLOWED_PLANS = ['standard', 'enterprise'];
 
@@ -1005,5 +1006,247 @@ async function doLogout() {
 // Run on load
 checkAuth();
 </script>
+
+<!-- Drive-Proxy-Client (K9 Stufe 2). Source-of-Truth: _shared/drive-proxy-client.js (byte-identisch ohne JSDoc-Header) -->
+<script>
+(function () {
+  'use strict';
+
+  const config = Object.assign({
+    proxyUrl: 'https://rjvdmyjuqtchznlhffzo.supabase.co/functions/v1/drive-proxy',
+    toastDuration: 5000,
+    openInNewTab: true,
+    debug: false
+  }, window.ZGDriveProxyConfig || {});
+
+  // ===================================================================
+  // URL-Pattern-Matcher
+  // ===================================================================
+
+  // Erfasst Drive-File-Links UND Google-Docs/Sheets/Slides-Links
+  const DRIVE_URL_RE = /^https:\/\/(?:drive|docs)\.google\.com\/(?:file|document|spreadsheets|presentation)\/d\/([A-Za-z0-9_-]+)/;
+
+  function extractFileId(href) {
+    const m = (href || '').match(DRIVE_URL_RE);
+    return m ? m[1] : null;
+  }
+
+  // ===================================================================
+  // Toast-UI (minimal, dependency-frei)
+  // ===================================================================
+
+  let toastContainer = null;
+  function showToast(message, type) {
+    if (!toastContainer) {
+      toastContainer = document.createElement('div');
+      toastContainer.style.cssText =
+        'position:fixed;bottom:20px;right:20px;z-index:99999;display:flex;flex-direction:column;gap:8px;font-family:sans-serif;';
+      document.body.appendChild(toastContainer);
+    }
+    const colors = {
+      info:  { bg: '#1f2d24', border: '#c08c28', text: '#f0e8d4' },
+      error: { bg: '#3a1818', border: '#c66',    text: '#f5d4d4' },
+      warn:  { bg: '#3a2a14', border: '#d9a14a', text: '#f5e5c4' }
+    };
+    const c = colors[type] || colors.info;
+    const el = document.createElement('div');
+    el.style.cssText =
+      `background:${c.bg};border:1px solid ${c.border};color:${c.text};` +
+      `padding:12px 16px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.3);` +
+      `font-size:13px;line-height:1.4;max-width:380px;opacity:0;transition:opacity .2s;`;
+    el.textContent = message;
+    toastContainer.appendChild(el);
+    requestAnimationFrame(() => { el.style.opacity = '1'; });
+    setTimeout(() => {
+      el.style.opacity = '0';
+      setTimeout(() => el.remove(), 250);
+    }, config.toastDuration);
+  }
+
+  // ===================================================================
+  // Auth-Token holen aus Supabase-SDK
+  // ===================================================================
+
+  async function getAccessToken() {
+    if (typeof window.sb === 'undefined' || !window.sb.auth) {
+      throw new Error('Supabase-Client nicht verfügbar (window.sb fehlt)');
+    }
+    const { data } = await window.sb.auth.getSession();
+    if (!data || !data.session) return null;
+    return data.session.access_token;
+  }
+
+  // ===================================================================
+  // File via Proxy holen + Browser-Download triggern
+  // ===================================================================
+
+  async function openFile(event, href) {
+    if (event) event.preventDefault();
+
+    const fileId = extractFileId(href);
+    if (!fileId) {
+      if (config.debug) console.warn('[drive-proxy-client] kein File-ID in', href);
+      return;
+    }
+
+    if (config.debug) console.log('[drive-proxy-client] click', fileId);
+
+    let token;
+    try {
+      token = await getAccessToken();
+    } catch (e) {
+      showToast('Bitte einloggen, um Vorlagen herunterzuladen.', 'warn');
+      return;
+    }
+    if (!token) {
+      showToast('Bitte einloggen, um Vorlagen herunterzuladen.', 'warn');
+      return;
+    }
+
+    showToast('Datei wird geladen…', 'info');
+
+    let resp;
+    try {
+      resp = await fetch(`${config.proxyUrl}?file_id=${encodeURIComponent(fileId)}`, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    } catch (e) {
+      showToast('Verbindungsproblem. Bitte erneut versuchen.', 'error');
+      if (config.debug) console.error('[drive-proxy-client] fetch error', e);
+      return;
+    }
+
+    if (!resp.ok) {
+      let msg = 'Datei konnte nicht geladen werden.';
+      let body = null;
+      try { body = await resp.json(); } catch (_) {}
+
+      if (resp.status === 401) {
+        msg = 'Sitzung abgelaufen. Bitte erneut einloggen.';
+      } else if (resp.status === 403) {
+        msg = 'Diese Datei ist nicht in Ihrem aktuellen Abo enthalten. Upgrade verfügbar auf zehndergovernance.com.';
+      } else if (resp.status === 503) {
+        msg = 'Datei-Server temporär nicht erreichbar. Bitte in 1-2 Min. erneut versuchen.';
+      } else if (body && body.reason) {
+        msg = `Fehler: ${body.reason}`;
+      }
+      showToast(msg, 'error');
+      if (config.debug) console.warn('[drive-proxy-client] denied', resp.status, body);
+      return;
+    }
+
+    // Stream → Blob → Download
+    const blob = await resp.blob();
+
+    // Filename aus Content-Disposition extrahieren (RFC 5987 UTF-8 Form)
+    let filename = `download-${fileId}`;
+    const cd = resp.headers.get('Content-Disposition') || '';
+    const m1 = cd.match(/filename\*=UTF-8''([^;]+)/i);
+    const m2 = cd.match(/filename="?([^";]+)"?/i);
+    if (m1) {
+      try { filename = decodeURIComponent(m1[1]); } catch (_) {}
+    } else if (m2) {
+      filename = m2[1];
+    }
+
+    const objectUrl = URL.createObjectURL(blob);
+
+    // MIME-basiert: nur PDF/Image/Text inline öffnen, sonst direkt downloaden
+    // (window.open ignoriert Content-Disposition → Office/ZIP würden als
+    // leerer Tab + UUID-Name landen statt mit echtem Namen runtergeladen)
+    const contentType = resp.headers.get('Content-Type') || '';
+    const canRenderInline =
+      contentType.startsWith('application/pdf') ||
+      contentType.startsWith('image/') ||
+      contentType.startsWith('text/');
+
+    if (config.openInNewTab && canRenderInline) {
+      // Inline-fähig im neuen Tab öffnen
+      const w = window.open(objectUrl, '_blank');
+      if (!w) {
+        // Pop-up-Blocker → Fallback Download
+        triggerDownload(objectUrl, filename);
+      }
+    } else {
+      // Office, ZIP, etc. → direkt Download mit echtem Filename
+      triggerDownload(objectUrl, filename);
+    }
+
+    // Object-URL nach 60s freigeben (Tab hat Datei dann entweder geladen oder geschlossen)
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
+  }
+
+  function triggerDownload(objectUrl, filename) {
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = filename;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => a.remove(), 1000);
+  }
+
+  // ===================================================================
+  // Auto-Scan + Click-Handler
+  // ===================================================================
+
+  function attachToLinks(root) {
+    const scope = root || document;
+    const links = scope.querySelectorAll('a[href*="drive.google.com"], a[href*="docs.google.com"]');
+    let attached = 0;
+    links.forEach((a) => {
+      if (a.dataset.zgProxyAttached === '1') return;
+      const fileId = extractFileId(a.href);
+      if (!fileId) return;
+      a.dataset.zgProxyAttached = '1';
+      a.addEventListener('click', (e) => openFile(e, a.href));
+      attached++;
+    });
+    if (config.debug) {
+      console.log(`[drive-proxy-client] ${attached} Drive-Links verdrahtet (von ${links.length} Kandidaten)`);
+    }
+    return attached;
+  }
+
+  // ===================================================================
+  // Public API + Init
+  // ===================================================================
+
+  window.ZGDriveProxy = {
+    openFile,
+    rescan: attachToLinks,
+    extractFileId,
+    config
+  };
+
+  function init() {
+    // Falls Supabase-Client noch nicht da: warten und retry
+    if (typeof window.sb === 'undefined' || !window.sb.auth) {
+      let retries = 0;
+      const wait = setInterval(() => {
+        if (typeof window.sb !== 'undefined' && window.sb.auth) {
+          clearInterval(wait);
+          attachToLinks();
+        } else if (++retries > 50) {  // 5s timeout
+          clearInterval(wait);
+          if (config.debug) {
+            console.warn('[drive-proxy-client] window.sb nie verfügbar — Helper inaktiv');
+          }
+        }
+      }, 100);
+    } else {
+      attachToLinks();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
 </body>
 </html>
