@@ -919,6 +919,7 @@ function show(id){
   document.getElementById('srDiv').classList.remove('active');
   window.scrollTo(0,0);
 }
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function doSearch(q){
   const sr=document.getElementById('srDiv');
   if(!q||q.length<2){sr.classList.remove('active');return;}
@@ -928,7 +929,7 @@ function doSearch(q){
   const res=[];
   q=q.toLowerCase();
   all.forEach(c=>{if(c.textContent.toLowerCase().includes(q))res.push(c.cloneNode(true));});
-  sr.innerHTML=`<div class="sr-count">${res.length} Dokument${res.length!==1?'e':''} für "${q}"</div>`;
+  sr.innerHTML=`<div class="sr-count">${res.length} Dokument${res.length!==1?'e':''} für "${escapeHTML(q)}"</div>`;
   res.forEach(r=>sr.appendChild(r));
   if(!res.length)sr.innerHTML+='<p style="color:rgba(255,255,255,.4);font-size:13px;">Keine Treffer. Versuchen Sie: AVV, TIA, Privacy Notice, Audit, DPIA...</p>';
 }
