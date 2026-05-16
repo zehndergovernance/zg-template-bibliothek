@@ -120,9 +120,11 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <p class="auth-sub">Exklusiv für Flatrate-Kunden — 130+ Vorlagen, alle Jurisdiktionen</p>
 
     <div id="loginForm" class="auth-form">
-      <input id="authEmail" class="auth-input" type="email" placeholder="E-Mail Adresse">
-      <input id="authPass" class="auth-input" type="password" placeholder="Passwort">
-      <button class="auth-btn" onclick="doLogin()">Einloggen →</button>
+      <form onsubmit="event.preventDefault();doLogin();return false;" autocomplete="on">
+      <input id="authEmail" name="email" autocomplete="email" required class="auth-input" type="email" placeholder="E-Mail Adresse">
+      <input id="authPass" name="password" autocomplete="current-password" required class="auth-input" type="password" placeholder="Passwort">
+      <button type="submit" class="auth-btn">Einloggen →</button>
+      </form>
       <div id="authMsg" class="auth-msg"></div>
     </div>
 
