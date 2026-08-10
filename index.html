@@ -955,11 +955,9 @@ async function checkAccess(user) {
     .from('user_subscriptions')
     .select('plan,status')
     .eq('user_id', user.id)
-    .in('plan', ALLOWED_PLANS)
-    .eq('status', 'active')
-    .maybeSingle();
-
-  if (data) {
+    .eq('status', 'active');
+  const ok = data?.some(s => ALLOWED_PLANS.includes(s.plan));
+  if (ok) {
     grantAccess();
   } else {
     showNoAccess();
