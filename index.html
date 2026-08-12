@@ -107,6 +107,9 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .auth-no-access.show{display:block;}
 .auth-spinner{display:none;font-size:13px;color:rgba(255,255,255,.4);}
 .auth-spinner.show{display:block;}
+.pwwrap{position:relative;width:100%;}
+.pweye{position:absolute;right:12px;top:12px;background:none;border:0;padding:0;cursor:pointer;font-size:15px;line-height:1;opacity:.55;}
+.pweye:hover{opacity:.95;}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -122,7 +125,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div id="loginForm" class="auth-form">
       <form onsubmit="event.preventDefault();doLogin();return false;" autocomplete="on">
       <input id="authEmail" name="email" autocomplete="email" required class="auth-input" type="email" placeholder="E-Mail Adresse">
-      <input id="authPass" name="password" autocomplete="current-password" required class="auth-input" type="password" placeholder="Passwort">
+      <div class="pwwrap"><input id="authPass" name="password" autocomplete="current-password" required class="auth-input" type="password" style="padding-right:38px;width:100%;box-sizing:border-box;" placeholder="Passwort"><button type="button" class="pweye" onclick="togglePw('authPass',this)" aria-label="Passwort anzeigen" tabindex="-1">👁</button></div>
       <button type="submit" class="auth-btn">Einloggen →</button>
       </form>
       <div id="authMsg" class="auth-msg"></div>
@@ -136,11 +139,22 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <a href="#" onclick="doLogout();return false;" style="font-size:12px;color:rgba(255,255,255,.3);">Anderes Konto verwenden</a>
     </div>
 
+    <div id="setPasswordForm" style="display:none;">
+      <p style="color:#fff;font-weight:600;margin-bottom:4px;">Willkommen bei Zehnder Governance</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px;">Legen Sie einmalig Ihr Passwort fest, um Ihren Portal-Zugang zu aktivieren.</p>
+      <form onsubmit="event.preventDefault();doSetPassword();return false;" autocomplete="on" style="display:flex;flex-direction:column;gap:10px;">
+      <div class="pwwrap"><input id="newPwInput" name="new-password" autocomplete="new-password" required minlength="8" class="auth-input" type="password" style="padding-right:38px;width:100%;box-sizing:border-box;" placeholder="Neues Passwort (mind. 8 Zeichen)"><button type="button" class="pweye" onclick="togglePw('newPwInput',this)" aria-label="Passwort anzeigen" tabindex="-1">👁</button></div>
+      <div class="pwwrap"><input id="newPwInput2" name="new-password" autocomplete="new-password" required minlength="8" class="auth-input" type="password" style="padding-right:38px;width:100%;box-sizing:border-box;" placeholder="Passwort wiederholen"><button type="button" class="pweye" onclick="togglePw('newPwInput2',this)" aria-label="Passwort anzeigen" tabindex="-1">👁</button></div>
+      <button type="submit" class="auth-btn">Passwort festlegen →</button>
+      </form>
+      <div id="setPwMsg" class="auth-msg"></div>
+    </div>
+
     <div id="authSpinner" class="auth-spinner">Prüfe Zugangsberechtigung...</div>
 
     <div class="auth-divider"></div>
     <div class="auth-links">
-      <a href="https://zg-portal-flatrate.vercel.app">Passwort vergessen?</a> &nbsp;·&nbsp;
+      <a href="#" onclick="doForgotPassword();return false;">Passwort vergessen?</a> &nbsp;·&nbsp;
       <a href="https://zehndergovernance.com">Zurück zur Website</a>
     </div>
   </div>
@@ -940,6 +954,8 @@ const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsI
 const {createClient} = supabase;
 const sb = createClient(SUPA_URL, SUPA_KEY);
 window.sb = sb;
+const _authHash = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
+const NEEDS_PW_SETUP = _authHash.get('type') === 'invite' || _authHash.get('type') === 'recovery';
 
 const ALLOWED_PLANS = ['standard', 'enterprise'];
 
@@ -986,7 +1002,7 @@ function showSpinner() {
 }
 
 async function doLogin() {
-  const email = document.getElementById('authEmail').value.trim();
+  const email = document.getElementById('authEmail').value.trim().toLowerCase();
   const pass = document.getElementById('authPass').value;
   const msg = document.getElementById('authMsg');
   if (!email || !pass) { msg.className='auth-msg error'; msg.textContent='Bitte E-Mail und Passwort eingeben.'; return; }
@@ -1000,9 +1016,34 @@ async function doLogout() {
   await sb.auth.signOut();
   location.reload();
 }
+function togglePw(id,btn){const el=document.getElementById(id);const show=el.type==='password';el.type=show?'text':'password';btn.textContent=show?'🙈':'👁';btn.setAttribute('aria-label',show?'Passwort verbergen':'Passwort anzeigen');}
+function showSetPassword(){
+  document.getElementById('loginForm').style.display='none';
+  document.getElementById('noAccess').classList.remove('show');
+  document.getElementById('authSpinner').classList.remove('show');
+  document.getElementById('setPasswordForm').style.display='block';
+}
+async function doForgotPassword(){
+  const email=document.getElementById('authEmail').value.trim().toLowerCase();
+  const msg=document.getElementById('authMsg');
+  if(!email){msg.className='auth-msg error';msg.textContent='Bitte zuerst deine E-Mail-Adresse eingeben.';return;}
+  await sb.auth.resetPasswordForEmail(email,{redirectTo:window.location.href});
+  msg.className='auth-msg success';msg.textContent='Falls ein Konto existiert, haben wir dir einen Reset-Link geschickt. Bitte Postfach prüfen (auch Spam).';
+}
+async function doSetPassword(){
+  const p1=document.getElementById('newPwInput').value;
+  const p2=document.getElementById('newPwInput2').value;
+  const msg=document.getElementById('setPwMsg');
+  if(p1.length<8){msg.className='auth-msg error';msg.textContent='Passwort muss mindestens 8 Zeichen haben.';return;}
+  if(p1!==p2){msg.className='auth-msg error';msg.textContent='Die Passwörter stimmen nicht überein.';return;}
+  const {error}=await sb.auth.updateUser({password:p1});
+  if(error){msg.className='auth-msg error';msg.textContent='Konnte Passwort nicht speichern: '+error.message;return;}
+  document.getElementById('setPasswordForm').style.display='none';
+  checkAuth();
+}
 
 // Run on load
-checkAuth();
+if(NEEDS_PW_SETUP){showSetPassword();}else{checkAuth();}
 </script>
 
 <!-- Drive-Proxy-Client (K9 Stufe 2). Source-of-Truth: _shared/drive-proxy-client.js (byte-identisch ohne JSDoc-Header) -->
